@@ -1,0 +1,37 @@
+# Set default behavior to automatically normalize line endings.
+* text=auto
+
+# C/C++ source files should stay LF for firmware portability
+*.cpp text eol=lf
+*.h text eol=lf
+*.ino text eol=lf
+*.c text eol=lf
+
+# Python files should stay LF
+*.py text eol=lf
+*.pyi text eol=lf
+
+# Shell scripts should stay LF
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Markdown/docs should stay LF
+*.md text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+
+# HTML should stay LF
+*.html text eol=lf
+
+# Binary files - do not touch
+*.tflite binary
+*.armodel binary
+*.bin binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
