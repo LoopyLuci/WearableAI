@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-dashboard:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: arduino-dashboard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pytest pytest-asyncio fastapi uvicorn httpx pyserial
+      - run: pytest tests/ -q
+
+  test-mcp-toolkit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: arduino-mcp-toolkit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -e .
+      - run: pip install pytest pytest-asyncio
+      - run: pytest tests/ -q
+
+  test-arp2040-unit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: arp-2040
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r host-tools/requirements.txt
+      - run: pip install pytest pytest-asyncio
+      - run: pytest tests/unit -q
+
+  test-arp2040-integration:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: arp-2040
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r host-tools/requirements.txt
+      - run: pip install pytest pytest-asyncio
+      - run: pytest tests/integration -q
