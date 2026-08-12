@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-primary: #0f1011;
+            --bg-secondary: #191a1b;
+            --bg-elevated: #28282c;
+            --border-subtle: rgba(255,255,255,0.05);
+            --border-standard: rgba(255,255,255,0.08);
+            --text-primary: #f7f8f8;
+            --text-secondary: #d0d6e0;
+            --text-tertiary: #8a8f98;
+            --text-quaternary: #62666d;
+            --accent: #7170ff;
+            --accent-hover: #828fff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        .app {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: 64px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            gap: 24px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #5e6ad2, #7170ff);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-subtle);
+            padding: 24px 16px;
+            overflow-y: auto;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+        
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+            padding: 0 8px;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            margin-bottom: 4px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .nav-item:hover {
+            background: rgba(255,255,255,0.04);
+            color: var(--text-primary);
+        }
+        
+        .nav-item.active {
+            background: rgba(113, 112, 255, 0.08);
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .nav-item-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+        
+        /* Main Content */
+        .main {
+            padding: 32px;
+            overflow-y: auto;
+            max-height: calc(100vh - 64px);
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-standard);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .card-badge {
+            background: rgba(113, 112, 255, 0.08);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: var(--font-mono);
+        }
+        
+        /* Connection Panel */
+        .connection-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .connection-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-standard);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .connection-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+        
+        .connection-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+        
+        .connection-desc {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+        }
+        
+        .connection-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: var(--font-mono);
+        }
+        
+        .connection-status.connected {
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--success);
+        }
+        
+        .connection-status.disconnected {
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--error);
+        }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: var(--font-family);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid var(--border-standard);
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+        }
+        
+        .btn:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+        
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--error);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.15);
+        }
+        
+        /* Inputs */
+        .input {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-standard);
+            border-radius: 6px;
+            padding: 8px 14px;
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: 14px;
+            transition: border-color 0.15s;
+            outline: none;
+        }
+        
+        .input:focus {
+            border-color: var(--accent);
+        }
+        
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .metric-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-standard);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+        }
+        
+        .metric-unit {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-left: 4px;
+        }
+        
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .chart-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-standard);
+            border-radius: 12px;
+            padding: 20px;
+            height: 350px;
+        }
+        
+        /* Telemetry Log */
+        .telemetry-log {
+            background: #0a0b0c;
+            border: 1px solid var(--border-standard);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .log-line {
+            display: flex;
+            gap: 16px;
+            padding: 2px 0;
+        }
+        
+        .log-time {
+            color: var(--text-quaternary);
+            flex-shrink: 0;
+        }
+        
+        .log-type {
+            color: var(--accent);
+            flex-shrink: 0;
+            min-width: 100px;
+        }
+        
+        .log-message {
+            color: var(--text-secondary);
+        }
+        
+        .log-line.PASS .log-message { color: var(--success); }
+        .log-line.FAIL .log-message { color: var(--error); }
+        .log-line.WARN .log-message { color: var(--warning); }
+        .log-line.HEARTBEAT .log-message { color: var(--accent); }
+        
+        /* Tools Panel */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .tool-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-standard);
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        .tool-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+        
+        .tool-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+        
+        .tool-category {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Self-test Results */
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+        
+        .test-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-standard);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .test-name {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-family: var(--font-mono);
+        }
+        
+        .test-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .test-status.pass {
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--success);
+        }
+        
+        .test-status.fail {
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--error);
+        }
+        
+        .test-status.pending {
+            background: rgba(245, 158, 11, 0.08);
+            color: var(--warning);
+        }
+        
+        /* Serial Monitor */
+        .serial-monitor {
+            background: #0a0b0c;
+            border: 1px solid var(--border-standard);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .serial-input-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .serial-input {
+            flex: 1;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-standard);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .main {
+                padding: 16px;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Model Pages */
+        .form-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+        
+        .progress-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            font-family: var(--font-mono);
+        }
+        
+        .code-block {
+            background: #0a0b0c;
+            border: 1px solid var(--border-standard);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-x: auto;
+            color: var(--text-secondary);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">A</div>
+                    <span>Arduino Dashboard</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div id="connectionIndicator" class="connection-status disconnected">
+                    <span class="status-dot"></span>
+                    <span>Disconnected</span>
+                </div>
+                <button class="btn btn-danger" onclick="app.disconnect()">Disconnect</button>
+            </div>
+        </header>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Connect</div>
+                <div class="nav-item active" onclick="app.showPage('dashboard')" data-page="dashboard">
+                    <span class="nav-item-icon">📊</span>
+                    <span>Dashboard</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Tools</div>
+                <div class="nav-item" onclick="app.showPage('tools')" data-page="tools">
+                    <span class="nav-item-icon">🔧</span>
+                    <span>All Tools</span>
+                </div>
+                <div class="nav-item" onclick="app.showPage('serial')" data-page="serial">
+                    <span class="nav-item-icon">📟</span>
+                    <span>Serial Monitor</span>
+                </div>
+                <div class="nav-item" onclick="app.runTool('self_test')" data-tool="self_test">
+                    <span class="nav-item-icon">✅</span>
+                    <span>Self Test</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Models</div>
+                <div class="nav-item" onclick="app.showPage('models')" data-page="models">
+                    <span class="nav-item-icon">🧠</span>
+                    <span>TinyML Models</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Telemetry</div>
+                <div class="nav-item" onclick="app.showPage('telemetry')" data-page="telemetry">
+                    <span class="nav-item-icon">📈</span>
+                    <span>Charts & Logs</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Deployment</div>
+                <div class="nav-item" onclick="app.runTool('ota_update')" data-tool="ota_update">
+                    <span class="nav-item-icon">⬆️</span>
+                    <span>OTA Update</span>
+                </div>
+                <div class="nav-item" onclick="app.runTool('rollback')" data-tool="rollback">
+                    <span class="nav-item-icon">↩️</span>
+                    <span>Rollback</span>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Dashboard Page -->
+            <div id="page-dashboard" class="page">
+                <h1 class="page-title">Dashboard</h1>
+                
+                <!-- Connection Panel -->
+                <div class="connection-panel">
+                    <div class="connection-card">
+                        <div class="connection-icon">🔌</div>
+                        <div class="connection-title">Serial (USB)</div>
+                        <div class="connection-desc">Direct USB connection</div>
+                        <button class="btn" onclick="app.connectSerial()">Connect</button>
+                    </div>
+                    <div class="connection-card">
+                        <div class="connection-icon">📡</div>
+                        <div class="connection-title">Bluetooth</div>
+                        <div class="connection-desc">BLE wireless</div>
+                        <button class="btn" onclick="app.connectBLE()">Connect</button>
+                    </div>
+                    <div class="connection-card">
+                        <div class="connection-icon">📶</div>
+                        <div class="connection-title">WiFi</div>
+                        <div class="connection-desc">Network connection</div>
+                        <button class="btn" onclick="app.connectWiFi()">Connect</button>
+                    </div>
+                </div>
+                
+                <!-- Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Uptime</div>
+                        <div class="metric-value" id="metric-uptime">--</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Free SRAM</div>
+                        <div class="metric-value" id="metric-sram">--</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Battery</div>
+                        <div class="metric-value" id="metric-battery">--</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Agents</div>
+                        <div class="metric-value" id="metric-agents">--</div>
+                    </div>
+                </div>
+                
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <canvas id="uptimeChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="batteryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tools Page -->
+            <div id="page-tools" class="page" style="display:none;">
+                <h1 class="page-title">Tools</h1>
+                <div class="tools-grid" id="toolsGrid"></div>
+            </div>
+            
+            <!-- Serial Monitor Page -->
+            <div id="page-serial" class="page" style="display:none;">
+                <h1 class="page-title">Serial Monitor</h1>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Live Output</div>
+                        <button class="btn" onclick="app.clearMonitor()">Clear</button>
+                    </div>
+                    <div class="serial-monitor" id="serialMonitor">
+                        <div class="log-line">
+                            <span class="log-time">--:--:--</span>
+                            <span class="log-message">Waiting for connection...</span>
+                        </div>
+                    </div>
+                    <div class="serial-input-row">
+                        <input type="text" class="input serial-input" id="serialInput" placeholder="Type command..." onkeypress="if(event.key==='Enter')app.sendSerial()">
+                        <button class="btn btn-primary" onclick="app.sendSerial()">Send</button>
+                        <button class="btn" onclick="app.sendDump()">Dump Logs</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Telemetry Page -->
+            <div id="page-telemetry" class="page" style="display:none;">
+                <h1 class="page-title">Telemetry & Logs</h1>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Live Telemetry Stream</div>
+                        <div class="card-badge" id="telemetryCount">0 points</div>
+                    </div>
+                    <div class="telemetry-log" id="telemetryLog">
+                        <div class="log-line">
+                            <span class="log-time">--:--:--</span>
+                            <span class="log-type">SYSTEM</span>
+                            <span class="log-message">Waiting for telemetry...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Models Page -->
+            <div id="page-models" class="page" style="display:none;">
+                <h1 class="page-title">TinyML Models</h1>
+                
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <div class="card-title">Model Registry</div>
+                        <div class="card-badge" id="modelCount">0 models</div>
+                    </div>
+                    <div class="tools-grid" id="modelsGrid"></div>
+                </div>
+                
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <div class="card-title">Generate / Train Model</div>
+                    </div>
+                    <div class="form-row">
+                        <select class="input" id="modelSelect">
+                            <option value="kws_cnn">KWS CNN (Keyword Spotting)</option>
+                            <option value="imu_1dcnn">IMU 1D-CNN (Gesture Recognition)</option>
+                            <option value="audio_scene">Audio Scene Classifier</option>
+                        </select>
+                        <input type="number" class="input" id="trainEpochs" placeholder="Epochs" value="5" min="1" max="100">
+                        <button class="btn btn-primary" onclick="app.trainModel()">Train</button>
+                        <button class="btn" onclick="app.generateModel()">Generate Dummy</button>
+                    </div>
+                    <div id="trainProgress" style="margin-top: 16px; display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="trainProgressBar"></div>
+                        </div>
+                        <div class="progress-text" id="trainProgressText">Training...</div>
+                    </div>
+                </div>
+                
+                <div class="card" id="modelDetailCard" style="display:none;">
+                    <div class="card-header">
+                        <div class="card-title" id="modelDetailTitle">Model Details</div>
+                        <div class="card-actions">
+                            <button class="btn" onclick="app.validateSelectedModel()">Validate</button>
+                            <button class="btn" onclick="app.packageSelectedModel()">Package</button>
+                            <button class="btn btn-secondary" onclick="app.deploySelectedModel()">Deploy</button>
+                            <button class="btn btn-secondary" onclick="app.loadSelectedModel()">Load Model</button>
+                            <button class="btn btn-secondary" onclick="app.inferSelectedModel()">Infer</button>
+                            <button class="btn btn-danger" onclick="app.deleteSelectedModel()">Delete</button>
+                        </div>
+                    </div>
+                    <pre class="code-block" id="modelDetailContent"></pre>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Arduino Dashboard Application
+        const app = {
+            ws: null,
+            connected: false,
+            charts: {},
+            telemetryData: { uptime: [], battery: [], memory: [] },
+            
+            init() {
+                this.connectWS();
+                this.renderTools();
+                this.initCharts();
+            },
+            
+            connectWS() {
+                const wsUrl = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws`;
+                this.ws = new WebSocket(wsUrl);
+                
+                this.ws.onopen = () => {
+                    console.log('WebSocket connected');
+                };
+                
+                this.ws.onmessage = (event) => {
+                    const msg = JSON.parse(event.data);
+                    this.handleMessage(msg);
+                };
+                
+                this.ws.onclose = () => {
+                    console.log('WebSocket closed, reconnecting in 2s...');
+                    setTimeout(() => this.connectWS(), 2000);
+                };
+                
+                this.ws.onerror = (err) => {
+                    console.error('WebSocket error:', err);
+                };
+            },
+            
+            handleMessage(msg) {
+                switch(msg.type) {
+                    case 'connection':
+                        this.updateConnection(msg.data);
+                        break;
+                    case 'telemetry':
+                        this.addTelemetry(msg.data);
+                        break;
+                    case 'training_progress':
+                        this.onTrainingProgress(msg.job_id, msg.data);
+                        break;
+                    case 'training_complete':
+                        this.onTrainingComplete(msg.job_id, msg.ok, msg.data);
+                        break;
+                    case 'training_error':
+                        alert(`Training error: ${msg.error}`);
+                        break;
+                    case 'tool_result':
+                        this.showToolResult(msg.tool, msg.data);
+                        break;
+                    case 'ack':
+                        console.log('Ack:', msg.command);
+                        break;
+                    case 'error':
+                        alert(`Error: ${msg.message}`);
+                        break;
+                }
+            },
+            
+            onTrainingProgress(jobId, data) {
+                const bar = document.getElementById('trainProgressBar');
+                const text = document.getElementById('trainProgressText');
+                const progress = document.getElementById('trainProgress');
+                if (bar && data.progress !== undefined) bar.style.width = `${data.progress}%`;
+                if (text && data.epoch && data.total_epochs) text.textContent = `Training: epoch ${data.epoch}/${data.total_epochs} loss=${data.loss ?? '-'} acc=${data.accuracy ?? '-'}`;
+                if (progress) progress.style.display = 'block';
+            },
+            
+            onTrainingComplete(jobId, ok, data) {
+                const bar = document.getElementById('trainProgressBar');
+                const text = document.getElementById('trainProgressText');
+                if (bar) { bar.style.width = '100%'; bar.className = ok ? 'progress-bar success' : 'progress-bar error'; }
+                if (text) text.textContent = ok ? 'Training complete' : 'Training failed';
+                this.loadModels();
+                alert(`Training ${ok ? 'complete' : 'failed'}: ${JSON.stringify(data, null, 2)}`);
+            },
+            
+            updateConnection(conn) {
+                this.connected = conn.connected;
+                const indicator = document.getElementById('connectionIndicator');
+                if (conn.connected) {
+                    indicator.className = 'connection-status connected';
+                    indicator.innerHTML = '<span class="status-dot"></span><span>Connected</span>';
+                } else {
+                    indicator.className = 'connection-status disconnected';
+                    indicator.innerHTML = '<span class="status-dot"></span><span>Disconnected</span>';
+                }
+            },
+            
+            // Connection methods
+            connectSerial() {
+                const port = prompt('Serial port (e.g., COM15):', 'COM15');
+                if (!port) return;
+                this.ws.send(JSON.stringify({
+                    type: 'connect_serial',
+                    payload: { port: port, baudrate: 921600 }
+                }));
+            },
+            
+            connectBLE() {
+                this.ws.send(JSON.stringify({
+                    type: 'connect_ble',
+                    payload: { device_name: 'ARP-2040' }
+                }));
+            },
+            
+            connectWiFi() {
+                const host = prompt('WiFi host (e.g., 192.168.4.1):', '192.168.4.1');
+                if (!host) return;
+                this.ws.send(JSON.stringify({
+                    type: 'connect_wifi',
+                    payload: { host: host, port: 8080 }
+                }));
+            },
+            
+            disconnect() {
+                this.ws.send(JSON.stringify({ type: 'disconnect' }));
+            },
+            
+            // Navigation
+            showPage(page) {
+                document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+                document.getElementById(`page-${page}`).style.display = 'block';
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.querySelectorAll(`[data-page="${page}"]`).forEach(n => n.classList.add('active'));
+                
+                // Load page-specific data
+                if (page === 'models') {
+                    this.loadModels();
+                }
+            },
+            
+            // Tools
+            renderTools() {
+                const tools = [
+                    { name: 'self_test', description: 'Run self-test suite', category: 'diagnostics' },
+                    { name: 'memory_report', description: 'Get SRAM/stack report', category: 'diagnostics' },
+                    { name: 'battery_status', description: 'Get battery info', category: 'power' },
+                    { name: 'crypto_status', description: 'Get ATECC608A status', category: 'security' },
+                    { name: 'agent_status', description: 'Get agent status', category: 'agents' },
+                ];
+                
+                const grid = document.getElementById('toolsGrid');
+                grid.innerHTML = tools.map(t => `
+                    <div class="tool-card" onclick="app.runTool('${t.name}')">
+                        <div class="tool-name">${t.name}</div>
+                        <div class="tool-category">${t.category}</div>
+                    </div>
+                `).join('');
+            },
+            
+            runTool(name) {
+                if (!this.connected) {
+                    alert('Not connected to any device');
+                    return;
+                }
+                this.ws.send(JSON.stringify({ type: name }));
+                this.showPage('telemetry');
+            },
+            
+            showToolResult(tool, data) {
+                console.log(`${tool} result:`, data);
+                alert(`${tool}: ${JSON.stringify(data, null, 2)}`);
+            },
+            
+            // Serial Monitor
+            clearMonitor() {
+                document.getElementById('serialMonitor').innerHTML = '';
+            },
+            
+            sendSerial() {
+                const input = document.getElementById('serialInput');
+                const data = input.value;
+                if (!data) return;
+                this.ws.send(JSON.stringify({
+                    type: 'serial_write',
+                    payload: { data: data }
+                }));
+                input.value = '';
+            },
+            
+            sendDump() {
+                this.ws.send(JSON.stringify({ type: 'serial_write', payload: { data: 'DUMP' } }));
+            },
+            
+            // Telemetry
+            addTelemetry(point) {
+                const log = document.getElementById('telemetryLog');
+                const countEl = document.getElementById('telemetryCount');
+                const time = new Date(point.timestamp).toLocaleTimeString();
+                
+                const line = document.createElement('div');
+                line.className = `log-line ${point.type}`;
+                line.innerHTML = `
+                    <span class="log-time">${time}</span>
+                    <span class="log-type">${point.type}</span>
+                    <span class="log-message">${JSON.stringify(point.data)}</span>
+                `;
+                log.appendChild(line);
+                log.scrollTop = log.scrollHeight;
+                
+                if (countEl) {
+                    countEl.textContent = `${Math.floor(log.children.length)} points`;
+                }
+                
+                // Update metrics
+                this.updateMetrics(point);
+            },
+            
+            updateMetrics(point) {
+                if (point.data.uptime_s !== undefined) {
+                    const h = Math.floor(point.data.uptime_s / 3600);
+                    const m = Math.floor((point.data.uptime_s % 3600) / 60);
+                    document.getElementById('metric-uptime').textContent = `${h}h ${m}m`;
+                }
+            },
+            
+            // Charts
+            initCharts() {
+                const ctx1 = document.getElementById('uptimeChart');
+                const ctx2 = document.getElementById('batteryChart');
+                
+                if (ctx1) {
+                    this.charts.uptime = new Chart(ctx1, {
+                        type: 'line',
+                        data: {
+                            labels: [],
+                            datasets: [{
+                                label: 'Uptime',
+                                data: [],
+                                borderColor: '#7170ff',
+                                backgroundColor: 'rgba(113, 112, 255, 0.1)',
+                                fill: true,
+                                tension: 0.4,
+                                pointRadius: 0,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false },
+                            },
+                            scales: {
+                                x: {
+                                    grid: { color: 'rgba(255,255,255,0.05)' },
+                                    ticks: { color: '#8a8f98' }
+                                },
+                                y: {
+                                    grid: { color: 'rgba(255,255,255,0.05)' },
+                                    ticks: { color: '#8a8f98' }
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                if (ctx2) {
+                    this.charts.battery = new Chart(ctx2, {
+                        type: 'line',
+                        data: {
+                            labels: [],
+                            datasets: [{
+                                label: 'Battery %',
+                                data: [],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                fill: true,
+                                tension: 0.4,
+                                pointRadius: 0,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false },
+                            },
+                            scales: {
+                                x: {
+                                    grid: { color: 'rgba(255,255,255,0.05)' },
+                                    ticks: { color: '#8a8f98' }
+                                },
+                                y: {
+                                    min: 0,
+                                    max: 100,
+                                    grid: { color: 'rgba(255,255,255,0.05)' },
+                                    ticks: { color: '#8a8f98' }
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+            
+            // Models
+            async loadModels() {
+                try {
+                    const res = await fetch('/api/models/list');
+                    const data = await res.json();
+                    const grid = document.getElementById('modelsGrid');
+                    const countEl = document.getElementById('modelCount');
+                    
+                    const artifacts = [];
+                    for (const [name, items] of Object.entries(data.models || {})) {
+                        artifacts.push(...items);
+                    }
+                    
+                    if (countEl) {
+                        countEl.textContent = `${artifacts.length} artifacts`;
+                    }
+                    
+                    if (!artifacts.length) {
+                        grid.innerHTML = '<div style="color: var(--text-quaternary); font-size: 13px;">No models found. Generate or train one below.</div>';
+                        return;
+                    }
+                    
+                    grid.innerHTML = artifacts.map(a => `
+                        <div class="tool-card" onclick="app.showModelDetails('${a.path}')">
+                            <div class="tool-name">${a.name}</div>
+                            <div class="tool-category">${a.format} · ${(a.size_bytes / 1024).toFixed(1)} KB</div>
+                        </div>
+                    `).join('');
+                } catch (e) {
+                    console.error('Failed to load models', e);
+                }
+            },
+            
+            async showModelDetails(path) {
+                try {
+                    const res = await fetch(`/api/models/${encodeURIComponent(path)}?path=${encodeURIComponent(path)}`);
+                    const data = await res.json();
+                    document.getElementById('modelDetailCard').style.display = 'block';
+                    document.getElementById('modelDetailTitle').textContent = data.name || 'Model';
+                    document.getElementById('modelDetailContent').textContent = JSON.stringify(data, null, 2);
+                    this.selectedModelPath = path;
+                    this.selectedModelName = data.name;
+                } catch (e) {
+                    alert('Failed to load model details: ' + e.message);
+                }
+            },
+            
+            async trainModel() {
+                const name = document.getElementById('modelSelect').value;
+                const epochs = parseInt(document.getElementById('trainEpochs').value || '5', 10);
+                const progress = document.getElementById('trainProgress');
+                const bar = document.getElementById('trainProgressBar');
+                const text = document.getElementById('trainProgressText');
+                
+                progress.style.display = 'block';
+                bar.style.width = '0%';
+                text.textContent = 'Starting training...';
+                
+                try {
+                    const res = await fetch(`/api/models/${encodeURIComponent(name)}/train/stream?epochs=${epochs}`, { method: 'POST' });
+                    const data = await res.json();
+                    
+                    if (data.ok) {
+                        text.textContent = `Training started: ${data.job_id}`;
+                    } else {
+                        text.textContent = 'Training start failed';
+                        alert('Training start failed: ' + (data.error || 'unknown'));
+                    }
+                } catch (e) {
+                    text.textContent = 'Training error';
+                    alert('Training error: ' + e.message);
+                }
+            },
+            
+            async generateModel() {
+                const name = document.getElementById('modelSelect').value;
+                try {
+                    const res = await fetch(`/api/models/${encodeURIComponent(name)}/generate`, {
+                        method: 'POST'
+                    });
+                    const data = await res.json();
+                    if (data.ok) {
+                        this.loadModels();
+                        alert(`Generated ${name}: ${data.path}`);
+                    } else {
+                        alert('Generate failed: ' + (data.error || 'unknown'));
+                    }
+                } catch (e) {
+                    alert('Generate error: ' + e.message);
+                }
+            },
+            
+            async validateSelectedModel() {
+                if (!this.selectedModelPath) return alert('Select a model first');
+                try {
+                    const res = await fetch('/api/models/validate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({ model_path: this.selectedModelPath })
+                    });
+                    const data = await res.json();
+                    alert(JSON.stringify(data, null, 2));
+                } catch (e) {
+                    alert('Validate error: ' + e.message);
+                }
+            },
+            
+            async packageSelectedModel() {
+                if (!this.selectedModelPath) return alert('Select a model first');
+                try {
+                    const res = await fetch('/api/models/package', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({ 
+                            model_path: this.selectedModelPath,
+                            output_name: this.selectedModelName + '_deployed'
+                        })
+                    });
+                    const data = await res.json();
+                    if (data.ok) {
+                        this.loadModels();
+                        alert(`Packaged: ${data.output}`);
+                    } else {
+                        alert('Package failed: ' + (data.error || 'unknown'));
+                    }
+                } catch (e) {
+                    alert('Package error: ' + e.message);
+                }
+            },
+            
+            async deploySelectedModel() {
+                if (!this.selectedModelName) return alert('Select a model first');
+                try {
+                    const res = await fetch(`/api/models/${encodeURIComponent(this.selectedModelName)}/deploy`, {
+                        method: 'POST'
+                    });
+                    const data = await res.json();
+                    if (data.ok) {
+                        alert(`Deployed to ${data.target}: ${data.source}`);
+                    } else {
+                        alert('Deploy failed: ' + (data.error || 'unknown'));
+                    }
+                } catch (e) {
+                    alert('Deploy error: ' + e.message);
+                }
+            },
+            
+            async loadSelectedModel() {
+                if (!this.connected) return alert('Not connected');
+                try {
+                    const res = await fetch('/api/tools/load_model', { method: 'POST' });
+                    const data = await res.json();
+                    alert(JSON.stringify(data, null, 2));
+                } catch (e) {
+                    alert('Load model error: ' + e.message);
+                }
+            },
+            
+            async inferSelectedModel() {
+                const prompt = prompt('Inference prompt:', 'hello world');
+                if (!prompt) return;
+                try {
+                    const params = new URLSearchParams();
+                    params.set('prompt', prompt);
+                    const res = await fetch('/api/tools/inference_stream', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        body: params.toString()
+                    });
+                    const data = await res.json();
+                    alert(JSON.stringify(data, null, 2));
+                } catch (e) {
+                    alert('Inference error: ' + e.message);
+                }
+            },
+            
+            async deleteSelectedModel() {
+                if (!this.selectedModelPath) return alert('Select a model first');
+                if (!confirm('Delete this model?')) return;
+                try {
+                    const name = this.selectedModelName || '';
+                    const res = await fetch(`/api/models/${encodeURIComponent(name)}?filename=${encodeURIComponent(this.selectedModelPath)}`, {
+                        method: 'DELETE'
+                    });
+                    const data = await res.json();
+                    if (data.ok) {
+                        this.selectedModelPath = null;
+                        this.selectedModelName = null;
+                        document.getElementById('modelDetailCard').style.display = 'none';
+                        this.loadModels();
+                        alert('Deleted');
+                    } else {
+                        alert('Delete failed: ' + (data.error || 'unknown'));
+                    }
+                } catch (e) {
+                    alert('Delete error: ' + e.message);
+                }
+            }
+        };
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+            app.loadModels();
+        });
+    </script>
+</body>
+</html>

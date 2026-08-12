@@ -1,0 +1,33 @@
+# ARP-2040 Host Tools Requirements
+# Install: pip install -r requirements.txt
+
+# Testing
+pytest>=8.0.0
+pytest-cov>=5.0.0
+pytest-asyncio>=0.23.0
+
+# Serial communication (for hardware-in-loop tests)
+pyserial>=3.5
+
+# YAML/JSON config parsing
+pyyaml>=6.0.0
+
+# Binary protocol testing
+msgpack>=1.0.0
+
+# Model conversion (ONNX → TFLite)
+onnx>=1.15.0
+tensorflow>=2.15.0
+
+# Cryptography
+cryptography>=42.0.0
+
+# Progress bars
+tqdm>=4.66.0
+
+# Data analysis
+numpy>=1.26.0
+pandas>=2.2.0
+
+# CLI argument parsing
+click>=8.1.0

@@ -1,0 +1,39 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  host-tools-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r host-tools/requirements.txt
+      - run: pytest tests/unit/ tests/integration/ -v
+
+  firmware-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/compile-sketches@v1
+        with:
+          fqbn: rp2040:rp2040:nano_rp2040_connect
+          sketch-paths: firmware/
+
+  hardware-test:
+    needs: [host-tools-test, firmware-lint]
+    runs-on: self-hosted
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -r host-tools/requirements.txt
+      - run: python host-tools/test-runner/test_runner.py ${{ secrets.SERIAL_PORT }}
+
+  protocol-fuzz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -r host-tools/requirements.txt
+      - run: python -m fuzz_tests.protocol_fuzzer --duration 300

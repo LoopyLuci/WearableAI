@@ -1,0 +1,4055 @@
+
+--- PAGE 1 ---
+UBX-17065507 - R17 
+ 
+ 
+C1 – Public 
+ 
+www.u-blox.com 
+ 
+NINA-W10 series 
+Stand-alone multiradio modules 
+Data sheet 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Abstract 
+This technical data sheet describes the NINA-W10 series stand-alone multiradio MCU module that 
+integrates a powerful microcontroller (MCU) and a radio for wireless communication. The module 
+has a number of important embedded security features, including secure boot, which ensures the 
+module boots with authenticated software only.  
+ 
+
+--- PAGE 2 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Document information  
+Page 2 of 52 
+C1 – Public 
+ 
+ 
+Document information 
+Title 
+NINA-W10 series 
+Subtitle 
+Stand-alone multiradio modules 
+Document type 
+Data sheet 
+ 
+Document number 
+UBX-17065507 
+ 
+Revision and date 
+R17 
+5-May-2025 
+Disclosure restriction 
+C1 – Public 
+ 
+Product status 
+Corresponding content status  
+Functional sample 
+Draft 
+For functional testing. Revised and supplementary data will be published later. 
+In development / 
+Prototype 
+Objective Specification 
+Target values. Revised and supplementary data will be published later. 
+Engineering sample 
+Advance Information 
+Data based on early testing. Revised and supplementary data will be published later. 
+Initial production 
+Early Production Information 
+Data from product verification. Revised and supplementary data may be published later. 
+Mass production /  
+End of life 
+Production Information 
+Document contains the final product specification. 
+ 
+This document applies to the following products: 
+Product name 
+Type number 
+Hardware 
+version 
+IN/PCN reference 
+Product status 
+NINA-W101 
+NINA-W101-00B-00 
+06 
+UBX-22006732 
+Obsolete 
+NINA-W101 
+NINA-W101-01B-00 
+07 
+N/A 
+Not Recommended for New Design 
+NINA-W102 
+NINA-W102-00B-00 
+06 
+UBX-22006732 
+End-of-life 
+NINA-W102 
+NINA-W102-01B-00 
+07 
+N/A 
+Not Recommended for New Design 
+NINA-W106 
+NINA-W106-00B-01 
+06 
+UBX-21040655 
+Mass Production 
+NINA-W106 
+NINA-W106-10B-00 
+16 
+N/A 
+Not Recommended for New Design 
+ 
+ 
+ 
+u-blox or third parties may hold intellectual property rights in the products, names, logos and designs included in this 
+document. Copying, reproduction, or modification of this document or any part thereof is only permitted with the express 
+written permission of u-blox. Disclosure to third parties is permitted for clearly public documents only. 
+The information contained herein is provided “as is”. No warranty of any kind, either express or implied, is made in relation to 
+the accuracy, reliability, fitness for a particular purpose or content of this document. This document may be revised by u-blox 
+at any time. For most recent documents and statuses, please visit www.u-blox.com.  
+Copyright © u-blox AG. 
+
+--- PAGE 3 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Contents  
+Page 3 of 52 
+C1 – Public 
+ 
+ 
+Contents 
+Document information ................................................................................................................................ 2 
+Contents .......................................................................................................................................................... 3 
+1 
+Functional description ......................................................................................................................... 6 
+1.1 Overview ........................................................................................................................................................ 6 
+1.2 Applications ................................................................................................................................................. 6 
+1.3 Block diagram .............................................................................................................................................. 7 
+1.4 Product variants .......................................................................................................................................... 7 
+1.4.1 NINA-W101 .......................................................................................................................................... 7 
+1.4.2 NINA-W102 .......................................................................................................................................... 7 
+1.4.3 NINA-W106 .......................................................................................................................................... 7 
+1.5 Radio performance ..................................................................................................................................... 8 
+1.6 CPU................................................................................................................................................................. 8 
+1.6.1 Software upgrade ............................................................................................................................... 9 
+1.7 MAC addresses ........................................................................................................................................... 9 
+1.8 Power modes ................................................................................................................................................ 9 
+2 
+Interfaces .............................................................................................................................................. 10 
+2.1 Power supply ..............................................................................................................................................10 
+2.1.1 Module supply input (VCC) .............................................................................................................10 
+2.1.2 Digital I/O interfaces reference voltage (VCC_IO) ......................................................................10 
+2.2 Low power clock ........................................................................................................................................10 
+2.3 Module reset ..............................................................................................................................................10 
+2.4 Bootstrap pins ...........................................................................................................................................11 
+2.5 RF antenna interface ................................................................................................................................11 
+2.5.1 Internal antenna ................................................................................................................................11 
+2.5.2 External RF antenna interface .......................................................................................................12 
+2.6 IO signals .....................................................................................................................................................12 
+2.6.1 Pulse Width Modulation (PWM) ....................................................................................................12 
+2.7 Data interfaces ..........................................................................................................................................12 
+2.7.1 UARTs .................................................................................................................................................12 
+2.7.2 RMII ......................................................................................................................................................13 
+2.7.3 SPI ........................................................................................................................................................13 
+2.7.4 Dual/Quad SPI ....................................................................................................................................13 
+2.7.5 I2C ........................................................................................................................................................13 
+2.7.6 SDIO .....................................................................................................................................................13 
+2.7.7 CAN ......................................................................................................................................................13 
+2.8 Debug interfaces .......................................................................................................................................14 
+2.8.1 JTAG debug interfaces ...................................................................................................................14 
+2.9 Analog interfaces ......................................................................................................................................14 
+2.9.1 Analog to digital converters ...........................................................................................................14 
+2.9.2 Digital to analog converters ...........................................................................................................14 
+
+--- PAGE 4 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Contents  
+Page 4 of 52 
+C1 – Public 
+ 
+ 
+3 
+Pin definition ........................................................................................................................................ 15 
+3.1 Input and output pins ...............................................................................................................................15 
+3.2 NINA-W101/W102 pin assignment ......................................................................................................15 
+3.3 NINA-W106 pin assignment ...................................................................................................................16 
+3.4 Pinout ..........................................................................................................................................................17 
+4 
+Electrical specifications ................................................................................................................... 20 
+4.1 Absolute maximum ratings ....................................................................................................................20 
+4.1.1 Maximum ESD ratings .....................................................................................................................20 
+4.2 Operating conditions ................................................................................................................................20 
+4.2.1 Operating temperature range ........................................................................................................21 
+4.2.2 Supply/Power pins ............................................................................................................................21 
+4.2.3 RESET_N pin ......................................................................................................................................21 
+4.2.4 LPO clock ............................................................................................................................................21 
+4.2.5 Digital pins ..........................................................................................................................................22 
+4.2.6 Current consumption .......................................................................................................................22 
+4.2.7 Wi-Fi radio characteristics ..............................................................................................................23 
+4.2.8 Bluetooth radio characteristics .....................................................................................................23 
+4.2.9 Bluetooth LE characteristics..........................................................................................................24 
+4.2.10 Antenna radiation patterns ............................................................................................................24 
+5 
+Mechanical specifications ............................................................................................................... 27 
+5.1 NINA-W101 mechanical specifications................................................................................................27 
+5.2 NINA-W102 mechanical specifications................................................................................................28 
+5.3 NINA-W106 mechanical specifications................................................................................................29 
+6 
+Qualification and approvals............................................................................................................. 30 
+6.1 Country approvals .....................................................................................................................................30 
+6.2 European Union regulatory compliance ...............................................................................................30 
+6.2.1 Radio Equipment Directive (RED) 2014/53/EU ..........................................................................30 
+6.2.2 Compliance with the RoHS directive ............................................................................................30 
+6.3 Great Britain regulatory compliance .....................................................................................................30 
+6.3.1 UK Conformity Assessed (UKCA) ..................................................................................................30 
+6.4 FCC/IC compliance ....................................................................................................................................30 
+6.4.1 Open CPU responsibility and obligations .....................................................................................31 
+6.4.2 RF-exposure statement ..................................................................................................................31 
+6.4.3 End-product user manual instructions ........................................................................................32 
+6.4.4 End-product labeling requirements ..............................................................................................33 
+6.4.5 End-product compliance .................................................................................................................34 
+6.5 Japan radio equipment compliance ......................................................................................................34 
+6.6 NCC Taiwan compliance ..........................................................................................................................35 
+6.6.1 Taiwan NCC Warning Statement ..................................................................................................35 
+6.6.2 NINA-W101 labeling requirements for end product .................................................................35 
+6.6.3 NINA-W102 labeling requirements for end product .................................................................35 
+6.6.4 NINA-W106 labeling requirements for end product .................................................................35 
+
+--- PAGE 5 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Contents  
+Page 5 of 52 
+C1 – Public 
+ 
+ 
+6.7 KCC South Korea compliance .................................................................................................................36 
+6.8 Brazil compliance ......................................................................................................................................36 
+6.9 Australia and New Zealand regulatory compliance ...........................................................................37 
+6.10 South Africa regulatory compliance .....................................................................................................37 
+6.11 Safety Compliance ....................................................................................................................................38 
+6.12 Bluetooth qualification information ......................................................................................................38 
+7 
+Antennas ............................................................................................................................................... 39 
+7.1 Antenna accessories ................................................................................................................................40 
+7.2 Approved antennas ..................................................................................................................................40 
+7.2.1 Single band antennas ......................................................................................................................40 
+7.2.2 Dual-band antennas .........................................................................................................................43 
+8 
+Product handling ................................................................................................................................. 45 
+8.1 Packaging ...................................................................................................................................................45 
+8.1.1 Reels ....................................................................................................................................................45 
+8.1.2 Tapes ...................................................................................................................................................45 
+8.2 Moisture sensitivity levels .......................................................................................................................47 
+8.3 Reflow soldering ........................................................................................................................................47 
+8.4 ESD precautions ........................................................................................................................................47 
+9 
+Labeling and ordering information ............................................................................................... 48 
+9.1 Product labeling .........................................................................................................................................48 
+9.2 Product identifiers ....................................................................................................................................49 
+9.3 Identification codes ..................................................................................................................................49 
+9.4 Ordering information ................................................................................................................................49 
+Appendix ....................................................................................................................................................... 50 
+A 
+Glossary ................................................................................................................................................. 50 
+Related documents ................................................................................................................................... 51 
+Revision history .......................................................................................................................................... 51 
+Contact .......................................................................................................................................................... 52 
+ 
+
+--- PAGE 6 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Functional description  
+Page 6 of 52 
+C1 – Public 
+ 
+ 
+1 
+Functional description 
+1.1 Overview 
+NINA-W10 series are stand-alone multiradio MCU modules integrate a powerful microcontroller 
+(MCU) and a radio for wireless communication. With the open CPU architecture, customers can 
+develop advanced applications running on the dual core 32-bit MCU. The radio provides support for 
+Wi-Fi 802.11b/g/n in the 2.4 GHz ISM band and Bluetooth® Classic (Bluetooth BR/EDR and Bluetooth 
+Low Energy (LE) communications. 
+These compact modules include the wireless MCU, flash memory, crystal, and other components for 
+matching, 
+filtering, 
+antenna, 
+decoupling, 
+and 
+antenna 
+operation. 
+Supporting 
+integrated 
+cryptographic hardware accelerators, NINA-W10 series modules are ideal for telematics, low power 
+sensors, connected factories, connected buildings (appliances and surveillance), point-of-sales, 
+health devices, and other design solutions that demand top-grade security. 
+The simple device design allows developers to use an external antenna (NINA-W101) or utilize the 
+internal antenna (NINA-W102 and NINA-W106) in the application design. 
+NINA-W10 modules are compliant with the Radio Equipment Directive (RED) and are certified as 
+modular transmitters in the following countries: Great Britain (UKCA), US (FCC), Canada (IC / ISED 
+RSS), Japan (MIC), Taiwan (NCC), South Korea (KCC), Australia / New Zealand (ACMA), Brazil (Anatel), 
+South Africa (ICASA). The modules are also qualified in accordance with the ISO 16750 standard for 
+professional grade operation, verified against Bluetooth Core 4.2, and can operate in an extended 
+temperature range of –40 °C to +85 °C. 
+⚠ 
+Approval for NINA-W106 is currently pending in some countries. See also Country approvals. 
+1.2 Applications 
+NINA-W10 series are suitable for a wide range of applications, including:  
+• 
+Wi-Fi networks 
+• 
+Internet of Things (IoT) 
+• 
+Bluetooth and Bluetooth low energy applications 
+• 
+Telematics 
+• 
+Point-of-sales 
+• 
+Medical and industrial networks 
+• 
+Access to laptops, mobile phones, and similar consumer devices 
+• 
+Home/building automation apps 
+• 
+Ethernet/Wireless gateways 
+ 
+ 
+
+--- PAGE 7 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Functional description  
+Page 7 of 52 
+C1 – Public 
+ 
+ 
+1.3 Block diagram 
+ 
+ 
+ 
+ 
+* Only on NINA-W101 and NINA-W102. 
+ 
+ 
+ 
+** 16 Mbit NINA-W101 and NINA-W102; 32 Mbit NINA-W106-00B; 64Mbit NINA-W106-10B. 
+Figure 1: NINA-W10 series block diagram  
+1.4 Product variants 
+NINA-W10 modules have an open CPU architecture that is tailored towards OEMs that want to embed 
+Wi-Fi, Bluetooth, and Bluetooth LE support into their own application. 
+1.4.1 NINA-W101 
+NINA-W101 has no internal antenna, but the RF signal for routing to an external antenna or antenna 
+connector signal is exposed through a dedicated module pin instead. With a physical size of only 
+10.0 x 10.6 mm, the outline of this module variant is smaller than those equipped with an antenna. 
+The module outline is 10.0 x 10.6 mm with a height of 2.2 mm. 
+1.4.2 NINA-W102 
+NINA-W102 is equipped with a PIFA antenna. The RF signal is not connected to any module pin. The 
+module outline is 10.0 x 14.0 mm with a height of 3.8 mm. 
+1.4.3 NINA-W106 
+NINA-W106 is equipped with an internal PCB trace antenna, using antenna technology licensed from  
+Abracon. The RF signal is not connected to any module pin. The module outline is 10.0 x 14.0 mm with 
+a height of 2.2 mm. 
+Flash (16/32/64 Mbit)** 
+Linear voltage regulators 
+ RF 
+ROM 
+Wi-Fi 
+baseband 
+Bluetooth 
+Baseband 
+IO buffers 
+2xXtensa 32-bit LX6 MCU  
+SRAM 
+(4Mbit) 
+Cryptographic 
+hardware 
+accelerators 
+ 
+PIFA antenna 
+(NINA-W102) 
+PLL 
+Quad SPI 
+VCC_IO 
+VCC (3.0–3.6 V) 
+40 MHz 
+Reset 
+ANT (NINA-W101) 
+UART 
+RMII 
+I2C 
+SPI 
+SDIO 
+Quad SPI 
+JTAG 
+GPIO 
+ADC/DAC 
+EFUSE 
+CAN 
+BPF* 
+LPO 
+  
+(NINA-W106) 
+PCB trace antenna 
+ESP32 
+NINA-W10 
+
+--- PAGE 8 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Functional description  
+Page 8 of 52 
+C1 – Public 
+ 
+ 
+1.5 Radio performance 
+NINA-W10 series (NINA-W101, NINA-W102 and NINA-W106) modules support Wi-Fi and are 
+conformant with IEEE 802.11b/g/n single-band 2.4 GHz operation, Bluetooth BR/EDR, and 
+Bluetooth LE specifications, as shown in Table 1. 
+Wi-Fi 
+Bluetooth BR/EDR 
+Bluetooth Low Energy 
+IEEE 802.11b/g/n 
+ 
+Bluetooth v4.2 + EDR 
+Maximum number of slaves: 7 
+Bluetooth 4.2 BLE dual-mode 
+Band support 
+Station mode: 
+2.4 GHz, channel 1-13* 
+Access Point mode: 
+2.4 GHz, channel 1-13* 
+Band support 
+2.4 GHz, 79 channels 
+Band support 
+2.4 GHz, 40 channels 
+Typical conducted output power: 
+15 dBm 
+Typical conducted output power: 
+- 1 Mbit/s:     5 dBm  
+- 2/3 Mbit/s: 5 dBm 
+Typical conducted output power 
+5 dBm 
+Typical radiated output power: 
+18 dBm EIRP** 
+Typical radiated output power: 
+- 1 Mbit:           8 dBm EIRP** 
+- 2/3 Mbit/s: 8 dBm EIRP**  
+Typical radiated output power 
+8 dBm EIRP** 
+Conducted sensitivity 
+-96 dBm 
+Conducted sensitivity: 
+-88 dBm 
+Conducted sensitivity 
+-88 dBm 
+Data rates: 
+IEEE 802.11b: 
+1 / 2 / 5.5 / 11 Mbit/s 
+IEEE 802.11g: 
+6 / 9 / 12 / 18 / 24 / 36 / 48 / 54 Mbit/s 
+IEEE 802.11n: 
+MCS 0-7, HT20 (6.5-72 Mbit/s) 
+Data rates: 
+1 / 2 / 3 Mbit/s 
+Data rates: 
+1 Mbit/s 
+*  Depending on the location (country or region), channels 12-13 must be limited or disabled; the software implementation 
+must support country determination algoritms for using channel 12-13, for example, with 802.11d. For further information, 
+see also Country approvals. 
+** RF power including maximum antenna gain (3 dBi). 
+ 
+Table 1: NINA-W10 series Wi-Fi and Bluetooth characteristics 
+1.6 CPU 
+NINA-W10 series modules have a dual-core system with two Harvard Architecture Xtensa LX6 CPUs 
+operating at a maximum 240 MHz internal clock frequency.  
+The main features of the internal NINA-W10 memory include: 
+• 
+448 Kbyte ROM for booting and core functions 
+• 
+520 Kbyte SRAM for data and instruction 
+• 
+16/32 (NINA-W101 and NINA-W102/NINA-W106) Mbit FLASH for code storage, including 
+hardware encryption to protect programs.   
+• 
+1 kbit EFUSE (non-erasable memory) for MAC addresses, module configuration, flash encryption, 
+and chip ID 
+The (NINA-W10) open-CPU variants also support external FLASH and SRAM memory through a Quad 
+SPI interface. See also Dual/Quad SPI.  
+NINA-W10 is not supplied with any software but includes an open-CPU architecture that allows 
+customers to develop advanced applications running on the dual core 32-bit MCU. The radio provides 
+support for Wi-Fi 802.11b/g/n in the 2.4 GHz ISM band, Bluetooth BR/EDR, and Bluetooth LE 
+communication.  
+
+--- PAGE 9 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Functional description  
+Page 9 of 52 
+C1 – Public 
+ 
+ 
+NINA-W10 series modules can be used to design solutions with top-grade security. Including 
+integrated cryptographic hardware accelerators, the modules feature secure boot functionality that 
+ensures that the module can only be restarted with authenticated software. 
+☞ 
+The customer is responsible for the NINA-W10 certification and configuration. See also Country 
+approvals. 
+1.6.1 Software upgrade 
+For information about upgrading NINA-W10 series software, see also the NINA-W1 system 
+integration manual [1]. 
+1.7 MAC addresses 
+For information about MAC addresses, see https://docs.espressif.com/projects/esp-
+idf/en/latest/esp32/api-reference/system/system.html#mac-address. 
+1.8 Power modes 
+NINA-W10 series modules are power efficient devices capable of operating in different power saving 
+modes and configurations. Different sections of the module can be powered off when they are not 
+needed, and complex wake up events can be generated from different external and internal inputs.  
+For the lowest current consumption modes, an external LPO clock is required. See also Low power 
+clock. For more information about power modes, see the Espressif ESP32 Datasheet [3]. 
+ 
+ 
+
+--- PAGE 10 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Interfaces  
+Page 10 of 52 
+C1 – Public 
+ 
+ 
+2 
+Interfaces 
+2.1 Power supply 
+The power for NINA-W10 series modules is supplied through VCC and VCC_IO pins by DC voltage.  
+⚠ 
+The system power supply circuit must be able to support peak power. As the current drawn from 
+VCC and VCC_IO can vary significantly based on Wi-Fi power consumption profiles. 
+2.1.1 Module supply input (VCC) 
+NINA-W10 series modules use an integrated Linear Voltage converter to transform and stabilize the 
+supply voltage applied to the VCC pin.  
+2.1.2 Digital I/O interfaces reference voltage (VCC_IO) 
+All NINA-W10 series modules support an additional supply input for setting the I/O voltage level. 
+The separate VCC_IO pin enables integration of the module into applications with different voltage 
+levels (1.8 V or 3.3 V for example) without any level converters. NINA-W10 modules currently support 
+a 3.3 V IO voltage level only. 
+2.2 Low power clock 
+NINA-W10 series modules do not have an internal low power oscillator (LPO), which is required for low 
+power modes. If low power modes are required, an external 32.768 kHz LPO signal can be supplied 
+externally through LPO_IN.  
+2.3 Module reset 
+NINA-W10 series modules can be reset (rebooted) with a low-level input on the RESET_N pin. The logic 
+level of this pin is normally set high using an internal pull-up resistor. The low-level input triggers a 
+“hardware reset” of the module. The RESET_N signal should be driven by an open drain, open collector, 
+or contact switch. The chip works at the minimum power when RESET_N is low (off).  
+
+--- PAGE 11 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Interfaces  
+Page 11 of 52 
+C1 – Public 
+ 
+ 
+2.4 Bootstrap pins 
+Several module pins related to the boot configuration must be strapped correctly using either pull-up 
+or pull-down resistors, as shown in Table 2.  
+Exceptionally, pin 32 can be connected to GND to turn off debug printouts during start-up. 
+⚠ 
+Bootstrap pins should be avoided if other GPIO pins can be used instead. Note that all module pins 
+shown in bold are configured to their default state internally in the ESP32 chip and must NOT be 
+configured externally. 
+Pin 
+State during boot 
+Default 
+Behavior 
+Description 
+36 
+0 
+ 
+VDD_SDIO=3.3V 
+Internal flash voltage 
+1 
+10 kΩ pull-up 
+VDD_SDIO=1.8V  
+(VDD_SDIO should always be at 1.8 V) 
+27, 25 
+00 
+ 
+Download Boot 
+Booting Mode 
+01 
+ 
+Reserved, do not use 
+10 
+Pull-up*, Pull-down* 
+Normal Boot from internal Flash 
+11 
+ 
+Normal Boot from internal Flash 
+32 
+0 
+ 
+Silent 
+Debug printouts on 
+UART0 TXD during boot 
+1 
+Pull-up* 
+UART0 TXD toggling 
+32, 28 
+00 
+ 
+Falling-edge input, falling-edge output 
+Timing of SDIO slave 
+01 
+ 
+Falling-edge input, rising-edge output 
+10 
+ 
+Rising-edge input, falling-edge output 
+11 
+Pull-up*, Pull-up* 
+Rising-edge input, rising-edge output 
+*About 45 kΩ. 
+Table 2: NINA-W10 series bootstrapping pins 
+2.5 RF antenna interface 
+The RF antenna interface of NINA-W10 modules supports Wi-Fi, Bluetooth BR/EDR and Bluetooth LE 
+on the same antenna. The different communication protocols are time divided on the antenna to 
+switch between the Bluetooth and Wi-Fi data. Although communication using these different 
+protocols is (more or less) transparent in the application, these protocols are never active at exactly 
+the same time in the module antenna.  
+NINA-W10 series modules support either an internal antenna (NINA-W102 and NINA-W106) or 
+external antennas connected through a dedicated antenna pin (NINA-W101). 
+2.5.1 Internal antenna 
+Both NINA-W102 and NINA-W106 modules have internal antennas that are specifically designed and 
+optimized for NINA modules. The NINA-W102 module has a 2.4 GHz PIFA antenna and the 
+NINA-W106 module is equipped with a 2.4 GHz PCB trace antenna.  
+It is recommended that NINA-W102 modules are placed in such a way that the internal antenna is 
+strategically located in the corner of the host PCB (closest to pin 16). Alternatively, the antenna side 
+can be positioned along one side of the host PCB ground plane.  
+The suggestion for the PCB trace antenna in NINA-W106 modules is to place it in the middle – along 
+the side edge of the host PCB. 
+In NINA-W102 and NINA-W106 designs, keep a minimum clearance of 5 mm between the antenna 
+and the casing. Also, keep at least 10 mm of free space around the metal antenna including the area 
+directly below it. If a metal enclosure is required, use NINA-W101 and an external antenna. 
+
+--- PAGE 12 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Interfaces  
+Page 12 of 52 
+C1 – Public 
+ 
+ 
+It is beneficial to have a large solid ground plane on the host PCB with a good grounding on the module. 
+Minimum ground plane size is 24x30 mm but more than 50x50 mm is recommended. 
+See also the NINA-W1 series system integration manual [1] for more information about antenna-
+related design. 
+⚠ 
+The ANT signal solder pin is not available on the NINA-W102 or NINA-W106 module. 
+2.5.2 External RF antenna interface 
+NINA-W101 has an antenna signal (ANT) pin with a characteristic impedance of 50 Ω for using an 
+external antenna. The antenna signal supports both Tx and Rx.  
+The external antenna, for example, can be an SMD antenna (or PCB integrated antenna) on the host 
+board. An antenna connector for using an external antenna via a coaxial cable could also be 
+implemented. A cable antenna might be necessary if the module is mounted in a shielded enclosure 
+such as a metal box or cabinet. 
+An external antenna connector (U.FL. connector) reference design is available and must be followed 
+to comply with the NINA-W10 FCC/IC modular approvals. See also the list of approved antennas and 
+the NINA-W1 series system integration manual [1]. 
+2.6 IO signals 
+NINA-W1 has 36 pins in total. The pins can be used as GPI(O) but are also multiplexed with the digital 
+and analog interfaces. The input only signals (GPI) can only be input regardless of the selected 
+function/interface. 
+• 
+In NINA-W101/NINA-W102 the pins can be used for both input and output. 4 signals can be used 
+for input only.  
+• 
+In NINA-W106, 20 pins can be used for both input and output. 6 signals can be used for input only.  
+It is also possible to multiplex all interfaces to any pin through an IO multiplexer, but the speed is 
+limited. See also Digital pins.  
+2.6.1 Pulse Width Modulation (PWM)  
+The Pulse Width Modulation (PWM) functionality, for example, can be used to control the intensity of 
+LEDs and driving digital motors. The controller consists of PWM timers, the PWM operator, and a 
+dedicated capture sub-module. Each timer provides timing in synchronous or independent form, and 
+each PWM operator generates the waveform for one PWM channel.  
+The PWM controller has 16 channels, which can generate independent waveforms that can be used 
+to drive RGB LED devices. For maximum flexibility, the high-speed as well as the low-speed channels 
+can be driven from one of four high-speed/low-speed timers. The PWM controller also has the ability 
+to automatically increase or decrease the duty cycle gradually, allowing for fades without any 
+processor interference. The PWM signals can be configured to be available on any of the GPIO pins via 
+the IO multiplexer. 
+2.7 Data interfaces 
+2.7.1 UARTs 
+NINA-W10 modules have three UART interfaces, UART0 to UART2. Each interface provides 
+asynchronous communication support for RS232, RS485, and IrDA standards (with external drivers).  
+UART0 serves as the primary interface port. The maximum speed for all UART interfaces is 4 Mbit/s.  
+
+--- PAGE 13 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Interfaces  
+Page 13 of 52 
+C1 – Public 
+ 
+ 
+All UART interfaces can be routed to any GPIO pin through the IO multiplexer. But, as firmware 
+upgrades are performed through the default pins on UART0, it is advisable NOT to route this interface 
+to the other pins. For further information about the default pins, see also Pinout.  
+All UART interfaces provide hardware management of the CTS and RTS signals and software flow 
+control (XON and XOFF).  
+2.7.2 RMII 
+The RMII (Reduced Media-Independent Interface) Ethernet interface is intended for connecting to an 
+external PHY. The flow control of the UART0 interface is multiplexed with the RMII interface and 
+cannot be used simultaneously. An MDIO (Management Data Input/Output) interface used for 
+controlling the external PHY is also available. The pins for the MDIO interface are configurable by 
+software but the recommended pins are specified in the  Pin definition. 
+2.7.3 SPI 
+Two SPI interfaces are available for the application. One SPI interface with the name SPI_V and 
+another interface by name SPI_H (the SPI_H interface is multiplexed with the JTAG and SDIO 
+interfaces). It is possible to connect the SPI interfaces to other pins through the IO multiplexer but 
+this reduces the maximum speed. It is also possible to configure the SPI interface as a dual or quad 
+SPI (2 or 4 bit –bidirectional data signals), see also UARTs. 
+2.7.4 Dual/Quad SPI 
+The dual/quad SPI (2 or 4 bi-bidirectional data signals) can be used for connecting an additional 
+external flash or SRAM. The SPI to dual/quad SPI signal mappings is shown in Table 3. 
+SPI signal 
+Dual SPI signal 
+Quad SPI signal 
+MOSI 
+IO0 
+IO0 
+MISO 
+IO1 
+IO1 
+WP 
+- 
+IO2 
+HD 
+- 
+IO3 
+CS 
+CS 
+CS 
+CLK 
+CLK 
+CLK 
+Table 3: SPI to dual/quad SPI signal mapping 
+2.7.5 I2C 
+Three I2C interfaces can be routed over any GPIO pin. 
+NINA-W10 modules can operate as both the master and slave on the I2C bus, using both standard 
+(100 kbps) and fast (400 kbps) transmission speeds. The interface uses the SCL signal to clock 
+instructions and data on the SDL signal. 
+2.7.6 SDIO 
+SDIO is multiplexed with the JTAG interface and the second SPI interface (SPI_H). It is possible to 
+connect the SDIO interfaces to other pin through the IO multiplexer, but the speed is limited. See also 
+Digital pins. Only SDIO host is supported (not SDIO slave). 
+2.7.7 CAN 
+NINA-W10 modules support CAN 2.0. 
+
+--- PAGE 14 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Interfaces  
+Page 14 of 52 
+C1 – Public 
+ 
+ 
+2.8 Debug interfaces 
+2.8.1 JTAG debug interfaces 
+NINA-W10 modules support the JTAG debug interface (JTAG_TMS, JTAG_CLK, JTAG_TDI and 
+JTAG_TDO). The JTAG interface is multiplexed with the SDIO and secondary SPI interface (SPI_H). 
+2.9 Analog interfaces 
+2.9.1 Analog to digital converters 
+NINA-W10 modules have four pins marked as Analog to Digital Converter (ADC) input signals (ADC_2, 
+ADC_3, ADC_4 and ADC_34). See also Pin definition. These pins are primarily recommended for use 
+with the ADC application (for compatibility with future NINA modules). 
+12 additional GPIO pins can be used for ADC applications. These pins are marked as ADC-CH in the 
+“ESP-32” column of Table 4. The analog converters are 12-bit SAR ADCs.  
+For lower power consumption, NINA-W101, NINA-W102 and NINA-W106 modules can measure 
+voltages in sleep mode and threshold settings can be used to wake the CPU.  
+☞ 
+Analog pins cannot be re-routed to other pins through the IO multiplexer. 
+2.9.2 Digital to analog converters 
+Two 8-bit DAC channels DAC_16 and DAC_17 can be used to convert the two digital signals into two 
+analog voltage signal outputs. The design structure is composed of integrated resistor strings and a 
+buffer. This dual DAC has VCC as input voltage reference and can drive other circuits. The dual 
+channels support independent conversions. 
+☞ 
+Analog pins cannot be re-routed to other pins via the IO multiplexer. 
+ 
+
+--- PAGE 15 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Pin definition  
+Page 15 of 52 
+C1 – Public 
+ 
+ 
+3 
+Pin definition 
+3.1 Input and output pins 
+The pin assignment is different for each module variant: 
+• 
+NINA-W101/W102 modules have 36 pins:  
+20 can be used for either input or output. 4 are for input only.  
+• 
+NINA-W106 modules have 36 pins: 
+20 can be used for either input or output. 6 are for input only. 
+3.2 NINA-W101/W102 pin assignment 
+Figure 2 shows the multiplexed pinout for NINA-W101 and NINA-W102 Open CPU modules. These 
+and several additional interfaces not shown here are described in Table 4.  
+Although it is also possible to multiplex all interfaces through an IO multiplexer using any pin, the 
+maximum speed is limited. See also Digital pins.  
+ 
+ 
+ 
+Figure 2: NINA-W101/W102 pin assignment (top view) 
+36
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+SPI_V_MOSI/GPIO_1
+ADC_2/GPI_2
+ADC_3/GPI_3
+ADC_4/GPI_4
+GND
+LPO_IN/GPIO_7
+GPIO_24/RMII_MDIO
+GPIO_25/RMII_MDCLK
+GPIO_20/UART_RTS/RMII_TXD1/SPI_V_WP
+GPIO_21/UART_CTS/RMII_TXD0/SPI_V_MISO
+GPIO_22/UART_TXD
+GPIO_23/UART_RXD
+GPIO_27/RMII_CLK/SYS_BOOT
+GPIO_28/SPI_V_CS
+GPIO_29/SPI_V_CLK
+GND
+GND
+GPIO_5
+GPIO_18/RMII_CRS_DV
+GPIO_16/RMII_RXD0/DAC_16
+VCC_IO
+VCC
+GPIO_17/RMII_RXD1/DAC_17
+RESET_N
+15
+14
+13
+12
+11
+GND
+ANT
+GND
+RSVD
+RSVD
+SPI_V_HD/RMII_TX_EN/GPIO_8
+36
+35
+34
+33
+32
+31
+ADC_34/GPI_34
+RSVD
+JTAG_TDO/GPIO_32
+JTAG_TMS/GPIO_31
+JTAG_TCK/GPIO_35
+JTAG_TDI/GPIO_36
+NINA-W101/W102
+
+--- PAGE 16 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Pin definition  
+Page 16 of 52 
+C1 – Public 
+ 
+ 
+☞ 
+All grey pins located in the center of the module are GND pins.  
+☞ 
+The outline of the NINA-W101 module is shown above the dotted line. The additional antenna area 
+of NINA-W102 interfaces is shown below the dotted line.  
+☞ 
+Pins 2, 3, 4, and 34 can only be used as (GPI) input signals – regardless of the selected 
+function/interface. 
+☞ 
+The signals for several pins are bootstrapped. It is important that these signals, shown in Table 4, 
+have the correct state during startup. See also Bootstrap pins. 
+ 
+3.3 NINA-W106 pin assignment 
+ 
+ 
+Figure 3: NINA-W106 pin assignment (top view) 
+ 
+☞ 
+All grey pins are located in the center of the modules and the four in the front are GND pins.  
+☞ 
+Pins 2, 3, 4, 11, 15, and 34 can only be used as (GPI) input signals – regardless of the selected 
+function/interface. 
+36
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+SPI_V_MOSI/GPIO_1
+ADC_2/GPI_2
+ADC_3/GPI_3
+ADC_4/GPI_4
+GND
+GPIO_5
+GPIO_24/RMII_MDIO
+GPIO_25/RMII_MDCLK
+GPIO_20/UART_RTS/RMII_TXD1/SPI_V_WP
+GPIO_21/UART_CTS/RMII_TXD0/SPI_V_MISO
+GPIO_22/UART_TXD
+GPIO_23/UART_RXD
+GPIO_27/RMII_CLK/SYS_BOOT
+GPIO_28/SPI_V_CS
+GPIO_29/SPI_V_CLK
+GND
+GND
+LPO_IN/GPIO_7
+GPIO_18/RMII_CRS_DV
+GPIO_16/RMII_RXD0/DAC_16
+VCC_IO
+VCC
+GPIO_17/RMII_RXD1/DAC_17
+RESET_N
+15
+14
+13
+12
+11
+GND
+ANT
+GND
+GPI_37
+GPI_38
+SPI_V_HD/RMII_TX_EN/GPIO_8
+36
+35
+34
+33
+32
+31
+ADC_34/GPI_34
+RSVD
+JTAG_TDO/GPIO_32
+JTAG_TMS/GPIO_31
+JTAG_TCK/GPIO_35
+JTAG_TDI/GPIO_36
+NINA-W106
+
+--- PAGE 17 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Pin definition  
+Page 17 of 52 
+C1 – Public 
+ 
+ 
+☞ 
+The signals for several pins are bootstrapped. It is important that these signals, shown in Table 4, 
+have the correct state during startup. See also Bootstrap pins. 
+☞ 
+LPO_IN signals are located on a different pin on NINA-W106. 
+3.4 Pinout 
+Table 4 describes the common pinout for all NINA-W10 series modules.  
+Pin 
+Name 
+Additional 
+function 
+I/O 
+Description 
+ESP-32 GPIO /  
+ADC-CH  
+Remarks 
+1 
+GPIO_1/ 
+SPI_V_MOSI 
+ 
+I/O 
+General Purpose I/O / 
+SPI (port V) Master Output 
+Slave Input 
+23 /  
+ 
+2 
+GPI_2/ 
+ADC_2 
+ 
+I 
+General Purpose Input pin/ 
+Analog input pin. 
+34 /  
+1-CH6 
+This pin is input only.  
+For further information about the 
+analog input pin, see also Analog to 
+digital converters. 
+3 
+GPI_3/ 
+ADC_3 
+ 
+I 
+General Purpose Input pin/ 
+Analog input pin. 
+39 /  
+1-CH3 
+This pin is input only.  
+For further information about the 
+analog input pin, see also Analog to 
+digital converters. 
+4 
+GPI_4/ 
+ADC_4 
+ 
+I 
+General Purpose Input pin/ 
+Analog input pin. 
+36 /  
+1-CH0 
+This pin is input only.  
+For further information about the 
+analog input pin, see also Analog to 
+digital converters. 
+5 
+GPIO_5 
+ 
+TOUCH_9 
+I/O 
+General Purpose I/O / 
+Touch button input/ 
+Decoupling  
+32 /  
+1-CH4 
+These are the functions for 
+NINA-W101/NINA-W102.  
+Note the difference compared to 
+NINA-W106. 
+If used with external LPO_IN, put 
+decoupling capacitor >1nF to GND on 
+this pin only. 
+GPIO_7/ 
+LPO_IN 
+TOUCH_8 
+I/O 
+General Purpose I/O / 
+Low Power Oscillator Input / 
+Touch button input / 
+33 / 
+1-CH5 
+These are the functions for 
+NINA-W106. Note the difference 
+compared to NINA-W101/W102. 
+6 
+GND 
+ 
+ 
+Ground 
+ 
+ 
+7 
+GPIO_7/ 
+LPO_IN 
+TOUCH_8 
+I/O 
+General Purpose I/O / 
+Low Power Oscillator Input / 
+Touch button input / 
+33 / 
+1-CH5 
+These are the functions for 
+NINA-W101/NINA-W102. Note the 
+difference compared to NINA-W106. 
+GPIO_5 
+ 
+TOUCH_9 
+I/O 
+General Purpose I/O / 
+Touch button input/ 
+Decoupling  
+32 /  
+1-CH4 
+These are the functions for 
+NINA-W106. Note the difference 
+compared to NINA-W101/W102. 
+If used with external LPO_IN, put 
+decoupling capacitor >1nF to GND on 
+this pin only. 
+8 
+GPIO_8/ 
+RMII_TXEN/ 
+SPI_V_HD/ 
+ 
+I/O 
+General Purpose I/O / 
+RMII Transmit Enable output/ 
+SPI (port V) Hold/ 
+21 
+ 
+9 
+VCC_IO 
+ 
+I 
+Module I/O level voltage input 
+ 
+VIO voltage supply. 
+This pin is internally connected to 
+VCC pin on some other NINA 
+modules. 
+10 
+VCC 
+ 
+I 
+Module supply voltage input 
+ 
+3.0–3.6 V module voltage supply. 
+11 
+GPI_37 
+ 
+I 
+General Purpose I/O / Reserved 
+for future use. 
+ 
+NINA-W106: GPI_37  
+NINA-W101/NINA-W102:  
+Do not connect. 
+12 
+GND 
+ 
+ 
+Ground 
+ 
+ 
+
+--- PAGE 18 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Pin definition  
+Page 18 of 52 
+C1 – Public 
+ 
+ 
+Pin 
+Name 
+Additional 
+function 
+I/O 
+Description 
+ESP-32 GPIO /  
+ADC-CH  
+Remarks 
+13 
+ANT 
+ 
+I/O 
+Antenna Tx/Rx interface 
+ 
+50 Ω nominal characteristic 
+impedance, only used with 
+NINA-W101 modules. For 
+NINA-W102 and NINA-W106, this 
+pin can be left unconnected or 
+connected to GND. 
+14 
+GND 
+ 
+ 
+Ground 
+ 
+ 
+15 
+GPI_38 
+ 
+I 
+General Purpose I/O / Reserved 
+for future use. 
+ 
+NINA-W106: GPI_38  
+NINA-W101/NINA-W102:  
+Do not connect. 
+16 
+GPIO_16/ 
+RMII_RXD0/ 
+DAC_16 
+ 
+I/O 
+General Purpose I/O / 
+RMII Receive Data input 0/ 
+Digital to Analog Converter 
+25 / 
+2-CH8 
+ 
+17 
+GPIO_17/ 
+RMII_RXD1/ 
+DAC_17 
+ 
+I/O 
+General Purpose I/O / 
+RMII Receive Data input 1/ 
+Digital to Analog Converter 
+26 / 
+2-CH9 
+ 
+18 
+GPIO_18/ 
+RMII_CRSDV 
+TOUCH_7 
+I/O 
+General Purpose I/O /  
+Carrier Sense/Receive Data 
+Valid input/ 
+Touch button input / 
+27 / 
+2-CH7 
+ 
+19 
+RESET_N 
+ 
+I 
+External system reset input. 
+ 
+Active low 
+20 
+GPIO_20/ 
+UART_RTS/ 
+RMII_TXD1/ 
+SPI_V_WP 
+ 
+I/O 
+General Purpose I/O / 
+UART0 request to send control 
+signal / 
+RMII Transmit Data output 1 
+SPI (port V) Write Protect/ 
+22 
+ 
+21 
+GPIO_21/ 
+UART_CTS/ 
+RMII_TXD0/ 
+SPI_V_MISO/ 
+ 
+I/O 
+General Purpose I/O / 
+UART0 clear to send control 
+signal / 
+RMII Transmit Data output 0/ 
+SPI (port V) Master Input Slave 
+Output 
+19 
+ 
+22 
+GPIO_22/ 
+UART_TXD 
+ 
+I/O 
+General Purpose I/O / 
+UART data output 
+1 
+ 
+23 
+GPIO_23/ 
+UART_RXD 
+ 
+I/O 
+General Purpose I/O / 
+UART0 data input 
+3 
+ 
+24 
+GPIO_24/ 
+RMII_MDIO 
+SPI_H_HD/ 
+SDIO_D1/ 
+TOUCH_0 
+I/O 
+General Purpose I/O /  
+RMII Management data/  
+SPI (port H) Hold/ 
+SDIO host Data bit 1/ 
+Touch button input 
+4 /  
+2-CH0 
+ 
+25 
+RMII_MDCLK 
+SPI_H_WP/ 
+SDIO_D0/ 
+TOUCH_2 
+ 
+RMII Management data clock/  
+SPI (port H) Write Protect/ 
+SDIO host Data bit 0/ 
+Touch button input  
+2 / 
+2-CH2 
+See also Bootstrap pins 
+26 
+GND 
+ 
+ 
+Ground 
+ 
+ 
+27 
+RMII_CLK/ 
+SYS_BOOT 
+TOUCH_1 
+ 
+RMII clock line (input or 
+output)/  
+Firmware download/ 
+Touch button input 
+0 / 
+2-CH1 
+Pull low during startup for download 
+firmware. See also Bootstrap pins. 
+28 
+GPIO_28/ 
+SPI_V_CS 
+ 
+I/O 
+General Purpose I/O / 
+SPI (port V) chip select 
+5 
+ 
+29 
+GPIO_29/ 
+SPI_V_CLK 
+ 
+I/O 
+General Purpose I/O / 
+SPI (port V) clock 
+18 
+ 
+30 
+GND 
+ 
+ 
+Ground 
+ 
+ 
+
+--- PAGE 19 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Pin definition  
+Page 19 of 52 
+C1 – Public 
+ 
+ 
+Pin 
+Name 
+Additional 
+function 
+I/O 
+Description 
+ESP-32 GPIO /  
+ADC-CH  
+Remarks 
+31 
+GPIO_31/ 
+JTAG_TMS 
+SPI_H_CLK/ 
+SDIO_CLK/ 
+TOUCH_6 
+I/O 
+General Purpose I/O / 
+JTAG Test Mode Select/ 
+SPI (port H) clock/ 
+SDIO host clock/ 
+Touch button input 
+14 / 
+2-CH6 
+ 
+32 
+LOG_BOOT/ 
+JTAG_TDO 
+SPI_H_CS/ 
+SDIO_CMD/ 
+TOUCH_3 
+ 
+JTAG Test Data Out/ 
+SPI (port H) Chip Select/ 
+SDIO host Command/ 
+Touch button input 
+15 / 
+2-CH3 
+See also Bootstrap pins. 
+33 
+RSVD 
+ 
+ 
+Reserved for future use. 
+ 
+Do not connect 
+34 
+GPI_34/ 
+ADC_34 
+ 
+I 
+General Purpose Input pin/ 
+Analog input pin. 
+35 /  
+1-CH7 
+For input only 
+35 
+GPIO_35/ 
+JTAG_CLK 
+SPI_H_MOSI/ 
+SDIO_D3/ 
+TOUCH4 
+I/O 
+General Purpose I/O / 
+JTAG Test Data In/ 
+SPI (port H) Master Output 
+Slave Input / 
+SDIO host Data bit 3/ 
+Touch button input 
+13 / 
+2-CH4 
+ 
+36 
+GPIO_36/ 
+JTAG_TDI/ 
+SPI_H_MISO/ 
+SDIO_D2/ 
+TOUCH_5 
+I/O 
+General Purpose I/O / 
+JTAG Test Data In (debug 
+interface) / 
+SPI (port H) Master Input Slave 
+Output/ 
+SDIO host Data bit 2/ 
+Touch button input 
+12 / 
+2-CH5 
+See also Bootstrap pins. 
+Table 4: NINA-W10 pinout 
+ 
+
+--- PAGE 20 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Electrical specifications  
+Page 20 of 52 
+C1 – Public 
+ 
+ 
+4 
+Electrical specifications 
+⚠ 
+Stressing the device above one or more of the ratings listed in the Absolute maximum ratings can 
+cause permanent damage. These are stress ratings only. Operating the module at these or at any 
+conditions other than those specified in the Operating conditions should be avoided. Exposure to 
+absolute maximum rating conditions for extended periods may affect device reliability. 
+☞ 
+All given application information is only advisory and does not form part of the specification. 
+4.1 Absolute maximum ratings 
+Symbol 
+Description 
+Condition 
+Min 
+Max 
+Unit 
+VCC/ VCC_IO Module supply voltage 
+Input DC voltage at VCC and VCC_IO pins 
+-0.3 
+3.6 
+V 
+IVCC MAX +  
+IVCC_IO MAX 
+Absolute maximum power 
+consumption 
+ 
+ 
+500 
+mA 
+DPV 
+Digital pin voltage 
+Input DC voltage at any digital I/O pin 
+-0.3 
+3.6 
+V 
+P_ANT 
+Maximum power at receiver 
+Input RF power at antenna pin 
+ 
+0 
+dBm 
+Tstr 
+Storage temperature 
+ 
+-40 
++85 
+ºC 
+Table 5: Absolute maximum ratings 
+⚠ 
+The product is not protected against overvoltage or reversed voltages. If necessary, voltage spikes 
+exceeding the power supply voltage specification, given in Table 5, must be limited to values within 
+the specified boundaries by using appropriate protection devices. 
+4.1.1 Maximum ESD ratings 
+Parameter 
+Min. Typical Max. Unit 
+Remarks 
+ESD immunity 
+ 
+ 
+±8* 
+kV 
+Indirect discharge according to IEC 61000-4-2 
+ESD sensitivity, tested for all pins except ANT 
+and RSVD pins #11, #15, #33 
+ 
+ 
+2.0 
+kV 
+Human body model according to JEDEC 
+JS001 
+* Tested on EVK-NINA-W10 evaluation board. 
+Table 6: Maximum ESD ratings 
+⚠ 
+NINA-W10 series modules are Electrostatic Sensitive Devices, which means that some special 
+precautions must be observed when handling them. See also ESD precautions. 
+4.2 Operating conditions 
+⚠ 
+Operation beyond the specified operating conditions is not recommended and extended exposure 
+beyond them may affect device reliability. 
+☞ 
+Unless otherwise specified, all operating condition specifications are at an ambient temperature 
+of 25 °C and at a supply voltage of 3.3 V. 
+
+--- PAGE 21 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Electrical specifications  
+Page 21 of 52 
+C1 – Public 
+ 
+ 
+4.2.1 Operating temperature range 
+Parameter 
+Min 
+Max 
+Unit 
+Operating temperature 
+-40* 
++85 
+°C 
+* See voltage supply condition for the lowest temperature range in Supply/Power pins. 
+Table 7: Temperature range 
+4.2.2 Supply/Power pins 
+Symbol 
+Parameter 
+Condition 
+Min 
+Typ 
+Max 
+Unit 
+VCC 
+Input supply 
+voltage 
+Ambient temperature -20 °C to +85 °C 
+3.00 
+3.30 
+3.60 
+V 
+Ambient temperature -40 °C to +85 °C 
+3.00 
+3.30 
+3.45 
+V 
+VCC_IO 
+I/O reference 
+voltage 
+Ambient temperature -20 °C to +85 °C 
+3.00 
+3.30 
+3.60 
+V 
+Ambient temperature -40 °C to +85 °C 
+3.00 
+3.30 
+3.45 
+V 
+Table 8: Input characteristics of voltage supply pins 
+4.2.3 RESET_N pin 
+The conditions for VCC and RESET_N timing during start-up and reset duration, are shown in  
+Figure 4. The parameters shown in the timing diagram are described in Table 9. 
+ 
+Figure 4: Module power-up and reset timing 
+Pin name 
+Parameter 
+Min 
+Typ 
+Max 
+Unit 
+RESET_N 
+Low-level input 
+0 
+ 
+0.3*VCC 
+V 
+Internal pull-up resistance 
+ 
+100 
+ 
+kΩ 
+Internal capacitance 
+ 
+10 
+ 
+nF 
+t0 
+Time from VCC valid input level 3.0 V to RESET_N release 
+reaches 0.6 V 
+50 
+1000 
+ 
+µs 
+t1 
+Duration of RESET_N pin < low level input 0.6 V, to trigger 
+hardware reset 
+50 
+ 
+ 
+µs 
+t_Startup 
+Startup time after release of reset  
+ 
+2.6 
+ 
+s 
+Table 9: RESET_N pin characteristics 
+☞ 
+In case of slow ramp-up, frequent power on & off, or unstable power supply (e.g., battery charging, 
+photovoltaic systems) consider using an external reset chip or a watchdog timer IC set to around 
+3.0 V to boot correctly. 
+4.2.4 LPO clock 
+NINA-W10 series modules do not have an internal low power oscillator (LPO) for low power modes. If 
+low power modes are required, the LPO signal can be supplied to the LPO_IN pin from an external 
+
+--- PAGE 22 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Electrical specifications  
+Page 22 of 52 
+C1 – Public 
+ 
+ 
+oscillator. The amplitude range is 0.6 V < Vpp < VCC_IO. If the input signal is square wave the bottom 
+voltage should be higher than 200 mV. 
+Symbol 
+Parameter 
+Min 
+Typ 
+Max 
+Unit 
+LPO 
+Input clock frequency 
+  
+32.768 
+  
+kHz 
+ 
+Input slow clock accuracy (Initial + temp + aging) 
+  
+  
+±150 
+ppm 
+Tr/Tf 
+Input transition time Tr/Tf -10% to 90% 
+  
+  
+100 
+ns 
+  
+Frequency input duty cycle 
+20 
+50 
+80 
+% 
+VIH 
+Input voltage limits  
+(Square wave, DC-coupled) 
+ 
+  
+VCC_IO 
+V 
+VIL 
+0 
+  
+0.6 
+V 
+  
+Input capacitance 
+  
+  
+10 
+pF 
+Table 10: External LPO clock characteristics 
+4.2.5 Digital pins 
+Pin name 
+Parameter 
+Min 
+Typ 
+Max 
+Unit 
+Remarks 
+Any digital pin 
+Input characteristic: 
+Low-level input 
+0 
+ 
+0.3*VCC_IO V 
+ 
+Input characteristic: 
+high-level input 
+0.7*VCC_IO  
+VCC_IO 
+V 
+ 
+Output characteristic: 
+Low-level output 
+0 
+ 
+0.4 
+V 
+ 
+Output characteristic: 
+High-level output 
+VCC_IO-0.4  
+VCC_IO 
+V 
+ 
+Drive capability 
+ 
+ 
+12 
+mA 
+Source/Sink 
+Pull-up/pull-down resistance  
+45 
+ 
+kΩ. 
+ 
+Signals 
+rerouted 
+through the 
+IO multiplexer 
+Output signal speed 
+ 
+ 
+20 
+MHz 
+ 
+Input signal speed 
+ 
+ 
+10 
+MHz 
+The GPIO-Matrix delays the input 
+signals by two cycles of the AHB-
+clock typical 80 MHz -> 25 ns delay 
+Table 11: Digital pin characteristics 
+4.2.6 Current consumption 
+The typical current consumption of a NINA-W10 module is shown in Table 12. The current 
+consumption is highly dependent on the application implementation. All measurements taken with 
+3.3 V supply at 25 °C. 
+☞ 
+The current consumption figures are inherited from the Espressif ESP 32 data sheet [3]. 
+Power mode 
+Activity 
+Typ 
+Unit 
+Remarks 
+Wi-Fi 
+Wi-Fi Tx packet POUT 16 dBm 
+190 
+mA 
+50% duty cycle, transmit 
+802.11g, OFDM 54 Mbit/s 
+Wi-Fi Rx and listening 
+95 
+mA 
+ 
+Bluetooth 
+ 
+Bluetooth Tx Pout 0 dBm 
+130 
+mA 
+50% duty cycle 
+Bluetooth Rx and listening 
+95 
+mA 
+ 
+Bluetooth LE 
+ 
+Bluetooth Tx Pout 0 dBm 
+130 
+mA 
+50% duty cycle 
+Bluetooth Rx and listening 
+95 
+mA 
+ 
+Modem-sleep mode 
+ 
+CPU speed 240 MHz, dual core 
+30 
+mA 
+Immediate wake-up 
+CPU speed 160 MHz, dual core 
+27 
+mA 
+CPU speed 80 MHz The CPU is operational.  
+The radio is turned off. 
+20 
+mA 
+
+--- PAGE 23 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Electrical specifications  
+Page 23 of 52 
+C1 – Public 
+ 
+ 
+Power mode 
+Activity 
+Typ 
+Unit 
+Remarks 
+Light-sleep mode 
+The CPU is paused. The RTC memory and RTC 
+peripherals, as well as the ULP 
+co-processor is running. Any wake-up events 
+(MAC, host, RTC timer, or external interrupts) will 
+wake 
+up the chip. 
+800 
+µA 
+ 
+Deep-sleep mode 
+The ULP co-processor is powered on 
+150 
+µA 
+ 
+ULP sensor-monitored pattern 
+100 
+µA 
+@ 1% duty cycle 
+RTC timer and RTC memory   
+10 
+µA 
+ 
+Hibernate mode 
+RTC timer only 
+5 
+µA 
+ 
+Table 12: Current consumption during typical use cases 
+4.2.7 Wi-Fi radio characteristics 
+VCC = 3.3 V, Tamb = 25 °C 
+Parameter 
+Operation mode 
+Specification 
+Unit 
+RF Frequency Range 
+802.11b/g/n 
+ 
+ 
+2.400 – 2.4835 
+GHz 
+Modulation 
+802.11b 
+ 
+ 
+CCK and DSSS 
+ 
+802.11g/n 
+ 
+ 
+OFDM 
+ 
+Supported Data Rates 
+802.11b 
+ 
+ 
+1, 2, 5.5, 11 
+Mbit/s 
+802.11g 
+ 
+ 
+6, 9, 12, 18, 24, 36, 48, 54 
+Mbit/s 
+802.11n 
+ 
+ 
+MCS0 – MCS7 
+ 
+Supported Bandwidth 
+802.11n 
+ 
+ 
+20 
+MHz 
+Supported Guard Interval 
+802.11n 
+ 
+ 
+400, 800 
+ns 
+Conducted Transmit Power (typical) 
+802.11b 
+Channel 6 
+1 Mbit/s 
+13* ± 1 
+dBm 
+11 Mbit/s 13* ± 1 
+dBm 
+802.11g 
+Channel 6 
+6 Mbit/s 
+15* ± 1 
+dBm 
+54 Mbit/s 12* ± 1 
+dBm 
+802.11n 
+ 
+Channel 6 
+MCS0 
+15* ± 1 
+dBm 
+MCS7 
+11* ± 1  
+dBm 
+Receiver Sensitivity (typical) 
+802.11b 
+ 
+1 Mbit/s 
+-96 ± 2  
+dBm 
+11 Mbit/s -88 ± 2  
+dBm 
+802.11g 
+ 
+6 Mbit/s 
+-92 ± 2  
+dBm 
+54 Mbit/s -74 ± 2  
+dBm 
+802.11n 
+20 MHz 
+MCS0 
+-91 ± 2  
+dBm 
+MCS7 
+-72 ± 2  
+dBm 
+* There is lower output power on band edge channels and also on the highest data rates. 
+Table 13: Wi-Fi radio characteristics 
+4.2.8 Bluetooth radio characteristics  
+VCC = 3.3 V, Tamb = 25 °C 
+Parameter 
+Operation Mode 
+Specification 
+Unit 
+RF Frequency Range 
+ 
+ 
+2.400 – 2.4835 
+GHz 
+Supported Modes 
+ 
+ 
+Bluetooth v4.2 + EDR 
+ 
+Number of channels 
+ 
+ 
+79 
+ 
+Modulation 
+ 
+1 Mbit/s 
+GFSK (BDR) 
+ 
+
+--- PAGE 24 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Electrical specifications  
+Page 24 of 52 
+C1 – Public 
+ 
+ 
+Parameter 
+Operation Mode 
+Specification 
+Unit 
+2 Mbit/s 
+π/4-DQPSK (EDR) 
+ 
+3 Mbit/s 
+8-DPSK (EDR) 
+ 
+Conducted Transmit Power (typical) 
+ 
+1 Mbit/s 
+5 ± 1  
+dBm 
+ 
+2/3 Mbit/s 
+5 ± 1 
+dBm 
+Receiver Sensitivity (typical) 
+ 
+1 Mbit/s 
+-88 ± 2 
+dBm 
+ 
+ 
+2 Mbit/s 
+-86 ± 2 
+dBm 
+ 
+ 
+3 Mbit/s 
+-80 ± 2 
+dBm 
+Table 14: Bluetooth radio characteristics 
+4.2.9 Bluetooth LE characteristics 
+VCC = 3.3 V, Tamb = 25 °C 
+Parameter 
+ 
+Specification 
+Unit 
+RF Frequency Range 
+ 
+ 
+2.400 – 2.4835 
+GHz 
+Supported Modes 
+ 
+ 
+Bluetooth v4.2 
+ 
+Number of channels 
+ 
+ 
+40 
+ 
+Modulation 
+ 
+ 
+GFSK  
+ 
+Transmit Power (typical) 
+ 
+ 
+5 ± 1 
+dBm 
+Receiver Sensitivity (typical) 
+ 
+ 
+-88 ± 2 
+dBm 
+Table 15: Bluetooth LE characteristics 
+4.2.10 Antenna radiation patterns 
+The radiation patterns displayed in Table 16 and Table 17 show the radiation patterns of NINA-W102 
+with internal PIFA antenna and NINA-W106 with internal PCB trace antenna.  
+Figure 5 provides a visual overview of the measurement procedure and shows how the 
+NINA-W102/NINA-W106 module is aligned to the XYZ-coordinate system.  
+ 
+ 
+Figure 5: Measurement procedure for radiation patterns 
+ 
+ 
+
+--- PAGE 25 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Electrical specifications  
+Page 25 of 52 
+C1 – Public 
+ 
+ 
+Table 16 shows the displayed radiation patterns of the internal PIFA antenna in NINA-W102. 
+ 
+  
+ 
+   
+ 
+Table 16: NINA-W102 antenna radiation patterns 
+
+--- PAGE 26 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Electrical specifications  
+Page 26 of 52 
+C1 – Public 
+ 
+ 
+Table 17 shows the displayed radiation patterns of the internal PCB trace antenna in NINA-W106. 
+  
+ 
+    
+ 
+   
+  
+Table 17: NINA-W106 antenna radiation patterns 
+ 
+
+--- PAGE 27 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Mechanical specifications  
+Page 27 of 52 
+C1 – Public 
+ 
+ 
+5 
+Mechanical specifications 
+5.1 NINA-W101 mechanical specifications 
+ 
+Figure 6: NINA-W101 mechanical outline 
+Parameter Description 
+Typical 
+ 
+Tolerance 
+ 
+A  
+Module PCB length [mm] 
+10.6 
+(417.3 mil) 
++0.20/-0.10 
+(+7.9/-3.9 mil) 
+B 
+Module PCB width [mm] 
+10.0 
+(393.7 mil) 
++0.20/-0.10 
+(+7.9/-3.9 mil) 
+C 
+Module thickness [mm] 
+2.2 
+(86.6 mil) 
++0.40/-0.20 
+(+15.8/-7.9 
+ccc 
+Seating plane coplanarity [mm] 
+0.10 
+(3.9 mil) 
++0.02/-0.10 
+(+0.8/-3.9 mil) 
+D 
+Horizontal edge to lateral pin 1 edge [mm] 
+0.45 
+(17.7 mil) 
++0.10/-0.10 
+(+3.9/-3.9 mil) 
+E 
+Vertical and horizontal edge to lateral pin 1 [mm] 
+0.30 
+(11.8 mil) 
++0.10/-0.10 
+(+3.9/-3.9 mil) 
+F 
+Vertical edge to lateral pin 1 [mm] 
+2.35 
+(92.5 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+G 
+Depanalizing residual [mm] 
+0.10 
+(3.9 mil) 
++0.25/-0.10 
+(+9.8/-3.9 mil) 
+H 
+Lateral and antenna row pin-to-pin pitch [mm] 
+1.0 
+(39.4 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+I 
+Lateral and antenna row pin width [mm] 
+0.70 
+(27.6 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+J 
+Lateral and antenna row pin height [mm] 
+1.15 
+(45.3 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+K 
+Horizontal pin 1 edge to central pin edge [mm] 
+2.78 
+(109.4 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+L 
+Vertical pin 1 edge to central pin edge [mm] 
+2.63 
+(103.5 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+M 
+Horizontal pin 1 edge to inner-row pin edge [mm] 
+1.45 
+(57.1 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+N 
+Vertical pin 1 edge to inner-row pin edge [mm] 
+1.6 
+(63.0 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+O 
+Central pin and inner row width and height [mm] 
+0.70 
+(27.6 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+P 
+Central pin to central pin pitch [mm] 
+1.15 
+(45.3 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+Q 
+Inner row pin-to-pin pitch [mm] 
+1.1 
+(43.3 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+R 
+Horizontal pin 1 edge to antenna row pin edge [mm] 
+8.7 
+(342.5 mil) 
++0.05/-0.05 
+(+2.0/-2.0 mil) 
+ 
+Module weight [g] 
+<1.0 
+ 
+ 
+ 
+Table 18: NINA-W101 mechanical outline data 
+
+--- PAGE 28 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Mechanical specifications  
+Page 28 of 52 
+C1 – Public 
+ 
+ 
+5.2 NINA-W102 mechanical specifications 
+ 
+Figure 7: NINA-W102 mechanical outline 
+Parameter Description 
+Typical 
+ 
+Tolerance 
+ 
+A  
+Module PCB length [mm] 
+14.0 
+(551.2 mil) +0.20/-0.10 (+7.9/-3.9 mil) 
+B 
+Module PCB width [mm] 
+10.0 
+(393.7 mil) +0.20/-0.10 (+7.9/-3.9 mil) 
+C 
+Module thickness [mm] 
+3.8 
+(149.6 mil) +0.40/-0.20 (+15.8/-7.9 
+ccc 
+Seating plane coplanarity [mm] 
+0.10 
+(3.9 mil) 
++0.02/-0.10 (+0.8/-3.9 mil) 
+D 
+Horizontal edge to lateral pin 1 edge [mm] 
+0.45 
+(17.7 mil) 
++0.10/-0.10 (+3.9/-3.9 mil) 
+E 
+Vertical and horizontal edge to lateral pin 1 edge [mm] 
+0.30 
+(11.8 mil) 
++0.10/-0.10 (+3.9/-3.9 mil) 
+F 
+Vertical pin 1 edge to lateral pin edge [mm] 
+2.35 
+(92.5 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+G 
+Depanalizing residual [mm] 
+0.10 
+(3.9 mil) 
++0.25/-0.10 (+9.8/-3.9 mil) 
+H 
+Lateral and antenna row pin-to-pin pitch [mm] 
+1.0 
+(39.4 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+I 
+Lateral and antenna row pin width [mm] 
+0.70 
+(27.6 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+J 
+Lateral and antenna row pin height [mm] 
+1.15 
+(45.3 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+K 
+Horizontal pin 1 edge to central pin edge [mm] 
+2.78 
+(109.4 mil) +0.05/-0.05 (+2.0/-2.0 mil) 
+L 
+Vertical pin 1 edge to central pin edge [mm] 
+2.63 
+(103.5 mil) +0.05/-0.05 (+2.0/-2.0 mil) 
+M 
+Horizontal pin 1 edge to inner row pin edge [mm] 
+1.45 
+(57.1 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+N 
+Vertical pin 1 edge to inner-row pin edge [mm] 
+1.6 
+(63.0 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+O 
+Central pin and inner-row width and height [mm] 
+0.70 
+(27.6 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+P 
+Central pin to central pin pitch [mm] 
+1.15 
+(45.3 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+Q 
+Inner row pin-to pin pitch [mm] 
+1.1 
+(43.3 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+R 
+Horizontal pin 1 edge-to-antenna row pin edge [mm] 
+8.7 
+(342.5 mil) +0.05/-0.05 (+2.0/-2.0 mil) 
+S 
+PCB and shield cover thickness [mm] 
+2.2 
+(86.6 mil) 
++0.40/-0.20 (+15.8/-7.9 
+T 
+Module PIFA antenna width [mm] 
+3.8 
+(149.6 mil) +0.20/-0.20 (+7.9/-7.9 mil) 
+U 
+Antenna overhang outside module outline on any side 
+0.0 
+(0.0 mil) 
++0.60 
+(+23.6 mil) 
+ 
+Module weight [g] 
+<1.0 
+ 
+ 
+ 
+Table 19: NINA-W102 mechanical outline data 
+ 
+ 
+
+--- PAGE 29 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Mechanical specifications  
+Page 29 of 52 
+C1 – Public 
+ 
+ 
+5.3 NINA-W106 mechanical specifications 
+ 
+Figure 8: NINA-W106 mechanical outline 
+Parameter Description 
+Typical 
+ 
+Tolerance 
+ 
+A  
+Module PCB length [mm] 
+14.0 
+(551.2 mil) +0.20/-0.10 (+7.9/-3.9 mil) 
+B 
+Module PCB width [mm] 
+10.0 
+(393.7 mil) +0.20/-0.10 (+7.9/-3.9 mil) 
+ccc 
+Seating plane coplanarity [mm] 
+0.10 
+(3.9 mil) 
++0.02/-0.10 (+0.8/-3.9 mil) 
+D 
+Horizontal edge to lateral pin 1 edge [mm] 
+0.45 
+(17.7 mil) 
++0.10/-0.10 (+3.9/-3.9 mil) 
+E 
+Vertical and horizontal edge to lateral pin 1 edge [mm] 
+0.30 
+(11.8 mil) 
++0.10/-0.10 (+3.9/-3.9 mil) 
+F 
+Vertical pin 1 edge to lateral pin edge [mm] 
+2.35 
+(92.5 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+G 
+Depanalizing residual [mm] 
+0.10 
+(3.9 mil) 
++0.25/-0.10 (+9.8/-3.9 mil) 
+H 
+Lateral and antenna row pin-to-pin pitch [mm] 
+1.0 
+(39.4 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+I 
+Lateral and antenna row pin width [mm] 
+0.70 
+(27.6 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+J 
+Lateral and antenna row pin height [mm] 
+1.15 
+(45.3 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+K 
+Horizontal pin 1 edge-to-central pin edge [mm] 
+2.78 
+(109.4 mil) +0.05/-0.05 (+2.0/-2.0 mil) 
+L 
+Vertical pin 1 edge-to-central pin edge [mm] 
+2.63 
+(103.5 mil) +0.05/-0.05 (+2.0/-2.0 mil) 
+M 
+Horizontal pin 1 edge-to-inner row pin edge [mm] 
+1.45 
+(57.1 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+N 
+Vertical pin 1 edge–to-inner row pin edge [mm] 
+1.6 
+(63.0 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+O 
+Central pin and inner-row width and height [mm] 
+0.70 
+(27.6 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+P 
+Central pin to central pin pitch [mm] 
+1.15 
+(45.3 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+Q 
+Inner-row pin-to-pin pitch [mm] 
+1.1 
+(43.3 mil) 
++0.05/-0.05 (+2.0/-2.0 mil) 
+R 
+Horizontal pin 1 edge-to-antenna row pin edge [mm] 
+8.7 
+(342.5 mil) +0.05/-0.05 (+2.0/-2.0 mil) 
+S 
+PCB and shield cover thickness [mm] 
+2.2 
+(86.6 mil) 
++0.40/-0.20 (+15.8/-7.9 
+T 
+Module PCB trace antenna width [mm] 
+4.0 
+(157.5 mil) +0.20/-0.20 (+7.9/-7.9 mil) 
+ZA1 
+Horizontal pin 1 corner to first set of antenna GND pins 
+pin center [mm] 
+10.35 
+(407.8 mil) +0.20/-0.10 (+7.9/-3.9 mil) 
+ZA2 
+Horizontal pin 1 corner to second set of antenna GND 
+pins pin center [mm] 
+12.90 
+(507.9 mil) +0.20/-0.10 (+7.9/-3.9 mil) 
+ 
+Module Weight [g] 
+<1.0 
+ 
+ 
+ 
+Table 20: NINA-W106 mechanical outline data 
+A
+B
+F
+H
+J
+E
+M
+K
+R
+F
+O
+O
+P
+N
+Q
+P
+L
+P
+P
+H
+D
+E
+I
+J
+I
+H
+ZA1
+ZA2
+F
+!CCC! A
+S
+A
+#
+T
+Pin 1
+Bottom view
+Top view
+Depanalizing 
+Residual 
+G
+G
+Pin 1
+
+--- PAGE 30 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 30 of 52 
+C1 – Public 
+ 
+ 
+6 
+Qualification and approvals 
+6.1 Country approvals 
+The NINA-W10 module series is certified for use in the following countries/regions:  
+• 
+Europe (RED)  
+• 
+Great Britain (UKCA) 
+• 
+USA (FCC)  
+• 
+Canada (IC)  
+• 
+Japan (MIC)  
+• 
+Taiwan (NCC)  
+• 
+South Korea (KCC)  
+• 
+Brazil (ANATEL)  
+• 
+Australia and New Zeeland (ACMA)  
+• 
+South Africa (ICASA)  
+See the following sections for additional information. 
+6.2 European Union regulatory compliance 
+Information about regulatory compliance of the European Union for NINA-W10 series modules is 
+available in the NINA-W10 EU Declaration of Conformity [4]. 
+6.2.1 Radio Equipment Directive (RED) 2014/53/EU 
+The NINA-W10 series modules comply with the essential requirements and other relevant provisions 
+of the Radio Equipment Directive (RED) 2014/53/EU.  
+6.2.2 Compliance with the RoHS directive 
+NINA-W10 series modules comply with the Directive 2011/65/EU (EU RoHS 2) and its amendment 
+Directive (EU) 2015/863 (EU RoHS 3). 
+6.3 Great Britain regulatory compliance 
+For information about the regulatory compliance of NINA-W10 series modules against requirements 
+and provisions in Great Britain, see also the NINA-W10 UKCA Declaration of Conformity [6].  
+6.3.1 UK Conformity Assessed (UKCA) 
+☞ 
+The United Kingdom is made up of the Great Britain (including England, Scotland, and Wales) and 
+the Northern Ireland. Northern Ireland continues to accept the CE marking. The following notice is 
+applicable to Great Britain only. 
+NINA-W10 series modules have been evaluated against the essential requirements of the Radio 
+Equipment Regulations 2017 (SI 2017 No. 1206, as amended by SI 2019 No. 696). 
+Guidance about using the UKCA marking: https://www.gov.uk/guidance/using-the-ukca-marking 
+6.4 FCC/IC compliance 
+This device complies with Part 15 of the FCC Rules and with Industry Canada license-exempt RSS 
+standard(s). 
+ 
+
+--- PAGE 31 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 31 of 52 
+C1 – Public 
+ 
+ 
+6.4.1 Open CPU responsibility and obligations 
+⚠ 
+Note that the FCC/IC modular transmitter approvals for NINA-W101 and NINA-W102 only allow 
+u-blox AG to integrate the module into an end-product. The integration of the module into an end-
+product can only be made by the grantee himself. To allow someone else to integrate NINA-W10 
+into an end-product, u-blox AG will help the integrator to obtain the status as grantee. The status 
+as grantee is obtained by performing a “change in ID”/”Multiple listing”. 
+The term “Change in ID” relates to § 2.933 of Title 47 of the Code of Federal Regulations (CFR) and 
+the term Multiple listing relates to ESD precautions of the Radio Standards Procedure RSP‑100.  
+Contact u-blox support for more information regarding the “Change in ID”/”Multiple listing” process. 
+⚠ 
+Modifications NOT explicitly APPROVED by the grantee may cause the module to be non-
+compliant with the FCC rules part 15 and void the user’s authority to use the equipment. 
+6.4.1.1 
+FCC compliance 
+The NINA-W10 modules are for OEM integrations only. The end-product will be professionally 
+installed in such manner that only the authorized antennas can be used. 
+For NINA-W101, an external antenna connector (U.FL. connector) reference design is available and 
+must be followed to comply with the NINA-W10 FCC/IC modular approval. See also the NINA-W1 
+series system integration manual [1]). 
+6.4.1.2 
+FCC statement 
+This device complies with Part 15 of the FCC Rules. Operation is subject to the following two 
+conditions: 
+1. This device may not cause harmful interference, and 
+2. This device must accept any interference received, including interference that may cause 
+undesired operation.  
+3. This equipment has been tested and found to comply with the limits for a Class B digital device, 
+pursuant to Part 15 of the FCC Rules. These limits are designed to provide reasonable 
+protection against harmful interference in a residential installation. This equipment 
+generates, uses and can radiate radio frequency energy and, if not installed and used in 
+accordance with the instructions, may cause harmful interference to radio communications. 
+However, there is no guarantee that the interference will not occur in a particular installation. 
+If this equipment does cause harmful interference to radio or television reception, which can 
+be determined by turning the equipment off and on, the user is encouraged to try to correct 
+the interference by one or more of the following measures: 
+o 
+Reorient or relocate the receiving antenna 
+o 
+Increase the separation between the equipment and receiver 
+o 
+Connect the equipment into an outlet on a circuit different from that to which the 
+receiver is connected. 
+o 
+Consult the dealer or an experienced radio/TV technician for help. 
+6.4.2 RF-exposure statement 
+6.4.2.1 
+IC compliance 
+This equipment complies with the requirements of IC RSS-102 issue 5 radiation exposure limits set 
+forth for an uncontrolled environment. 
+
+--- PAGE 32 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 32 of 52 
+C1 – Public 
+ 
+ 
+To ensure that the output power remains below the SAR evaluation Exemption limits defined in RSS-
+102 issue 5, customer applications integrating NINA-W106 must include a separation distance of at 
+least 40 mm between the user (or bystander) and the antenna (or radiating element). For applications 
+integrating NINA-W101 and NINA-W102 the separation distance of 30 mm is needed. 
+6.4.2.2 
+FCC compliance 
+This device complies with the FCC radiation exposure limits set forth for an uncontrolled environment.  
+To ensure that the output power remains below the SAR evaluation Exemption limits defined in SAR 
+test exclusion limits in KDB 447498 D01v06, customer applications integrating NINA-W106 must 
+include a separation distance of at least 45 mm between the user (or bystander) and the antenna (or 
+radiating element). For applications integrating NINA-W101 and NINA-W102 the separation distance 
+of 25 mm is needed. 
+6.4.3 End-product user manual instructions 
+6.4.3.1 
+IC compliance 
+☞ 
+License-exempt radio devices shall contain the following (or equivalent) notices displayed in a 
+conspicuous location—either in the user manual, on the device, or both: 
+☞ 
+This device contains licence-exempt transmitter/receiver that comply with Innovation, Science 
+and Economic Development Canada’s licence-exempt RSS(s). Operation is subject to the following 
+two conditions: 
+1. This device may not cause interference; and 
+2. This device must accept any interference, including interference that may cause undesired 
+operation of the device. 
+☞ 
+Under Industry Canada regulations, this radio transmitter can only operate using an antenna of a 
+type and maximum (or lesser) gain approved for the transmitter by Industry Canada. To reduce 
+potential radio interference to other users, the antenna type and its gain should be chosen in such 
+a way that the equivalent isotropically radiated power (e.i.r.p.) is not more than that is necessary 
+for successful communication. 
+Le manuel d’utilisation des appareils radio exempts de licence doit contenir l’énoncé qui suit, ou  
+l’équivalent, à un endroit bien en vue dans le manuel d’utilisation ou sur l’appareil,  
+ou encore aux deux endroits. 
+L’émetteur/récepteur exempt de licence contenu dans le  présent appareil est conforme aux CNR 
+d’Innovation, Sciences et Développement économique Canada applicables aux appareils radio 
+exempts de licence. L’exploitation est autorisée aux deux conditions suivantes:  
+1. l’appareil ne doit pas produire de brouillage.  
+2. l’utilisateur de l’appareil doit accepter tout brouillage radioélectrique subi, même si le  
+brouillage est susceptible d’en compromettre le fonctionnement. 
+Conformément aux réglementations d’Industry Canada, cet émetteur radio ne peut fonctionner 
+qu’à l’aide d’une antenne dont le type et le gain maximal (ou minimal) ont été approuvés pour cet 
+émetteur par Industry Canada. Pour réduire le 25ecess d’interférences avec d’autres utilisateurs, 
+il faut choisir le type d’antenne et son gain de telle sorte que la puissance isotrope rayonnée 
+équivalente (p.i.r.e) ne soit pas supérieure à celle requise pour obtenir une communication 
+satisfaisante. 
+
+--- PAGE 33 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 33 of 52 
+C1 – Public 
+ 
+ 
+6.4.4 End-product labeling requirements 
+6.4.4.1 
+IC compliance 
+The host product shall be properly labelled to identify the modules within the host product. 
+The Innovation, Science and Economic Development Canada certification label of a module shall be 
+clearly visible at all times when installed in the host product; otherwise, the host product must be 
+labelled to display the Innovation, Science and Economic Development Canada certification number 
+for the module, preceded by the word “contains” or similar wording expressing the same meaning, as 
+shown in Figure 9. 
+Le produit hôte devra être correctement étiqueté, de façon à permettre l’identification des modules 
+qui s’y trouvent. 
+L’étiquette d’homologation d’un module d’Innovation, Sciences et Développement économique 
+Canada devra être posée sur le produit hôte à un endroit bien en vue, en tout temps. En l’absence 
+d’étiquette, le produit hôte doit porter une 25ecessair sur laquelle figure le numéro d’homologation du 
+module d’Innovation, Sciences et Développement économique Canada, précédé du mot « contient », 
+ou d’une formulation similaire allant dans le même sens et qui va comme suit: 
+This device contains 
+FCC ID: XPYNINAW10 
+IC: 8595A-NINAW10 
+Figure 9: Example of an end product label 
+☞ 
+NINA-W106 has other IDs, as described in Table 21. 
+6.4.4.2 
+FCC Compliance 
+For an end product that uses the NINA-W10 modules, there must be a label containing, at least, the 
+information shown in Figure 9. 
+The label must be affixed on an exterior surface of the end product such that it will be visible upon 
+inspection in compliance with the modular approval guidelines developed by the FCC. 
+☞ 
+In accordance with 47 CFR § 15.19, the end-product shall bear the following statement in a 
+conspicuous location on the device: 
+This device complies with Part 15 of the FCC Rules. Operation is subject to the following two 
+conditions.  
+(1) this device may not cause harmful interference, and 
+(2) this device must accept any interference received, including interference that may cause 
+undesired operation. 
+When the device is so small or for such use that it is not practicable to place the statement above on 
+it, the information shall be placed in a prominent location in the instruction manual or pamphlet 
+supplied to the user or, alternatively, shall be placed on the container in which the device is marketed.  
+
+--- PAGE 34 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 34 of 52 
+C1 – Public 
+ 
+ 
+In case, where the final product will be installed in locations where the end-user is not able to see the 
+FCC ID and/or this statement, the FCC ID and the statement shall also be included in the end-product 
+manual. 
+Model 
+FCC ID 
+ISED certification number 
+NINA-W101 
+XPYNINAW10 
+8595A-NINAW10 
+NINA-W102 
+XPYNINAW10 
+8595A-NINAW10 
+NINA-W106 
+XPYNINAW106 
+8595A-NINAW106 
+Table 21: FCC and ISED Certification Number for the NINA-W10 series modules 
+6.4.5 End-product compliance 
+6.4.5.1 
+General requirements 
+• 
+Any changes to hardware, hosts or co-location configuration may require new radiated emission 
+and SAR evaluation and/or testing. 
+• 
+The regulatory compliance of NINA-W101, NINA-W102 and NINA-W106 modules does not exempt 
+the end-product from being evaluated against applicable regulatory demands; for example, FCC 
+Part 15B criteria for unintentional radiators. 
+• 
+Only authorized antenna(s) may be used.  
+• 
+Any notification to the end user about how to install or remove the integrated radio module is NOT 
+allowed.  
+6.4.5.2 
+Co-location (simultaneous transmission) 
+If the module is to be co-located with another transmitter, additional measurements for simultaneous 
+transmission are required. 
+6.5 
+Japan radio equipment compliance 
+ 
+204-810001 
+Figure 10: Giteki mark, R, and the NINA-W101/NINA-W102 MIC certification number 
+ 
+203-JN1166 
+Figure 11: Giteki mark, R, and the NINA-W106 MIC certification number 
+For information about compliance of the NINA-W101/NINA-W102/NINA-W106 modules with the 
+Giteki certification, see the NINA-W1 series system integration manual [1]. 
+
+--- PAGE 35 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 35 of 52 
+C1 – Public 
+ 
+ 
+6.6 NCC Taiwan compliance 
+6.6.1 Taiwan NCC Warning Statement 
+• 
+經型式認證合格之低功率射頻電機，非經許可，公司、商號或使用者均不得擅自變更頻率、 
+加大功率
+或變更原設計之特性及功能。 
+• 
+低功率射頻電機之使用不得影響飛航安全及干擾合法通信；經發現有干擾現象時，應立即停用，並改善
+至無干擾時方得繼續使用。前項合法通信，指依電信法規定作業之無線電通信。低功率射頻電機須忍受
+合法通信或工業、科學及醫療用電波輻射性電機設備之干擾。 
+Statement translation:   
+• 
+Without permission granted by the NCC, any company, enterprise, or user is not allowed to change 
+frequency, enhance transmitting power or alter original characteristic as well as performance to 
+an approved low power radio-frequency devices. 
+• 
+The low power radio-frequency devices shall not influence aircraft security and interfere legal 
+communications; If found, the user shall cease operating immediately until no interference is 
+achieved. The said legal communications means radio communications is operated in compliance 
+with the Telecommunications Act. The low power radio-frequency devices must be susceptible 
+with the interference from legal communications or ISM radio wave radiated devices. 
+6.6.2 NINA-W101 labeling requirements for end product 
+When a product integrated with an NINA-W101 module is placed on the Taiwan market, the product 
+must be affixed with a label marking as shown below. The label can use wording such as the following:  
+Contains Transmitter Module 
+內含發射器模組:: 
+ CCAJ18LP0B40T1 
+Any similar wording that expresses the same meaning may also be used. The marking must be visible 
+for inspection. 
+6.6.3 NINA-W102 labeling requirements for end product 
+When a product integrated with a NINA-W102 module is placed on the Taiwan market, the product 
+must be affixed with a label marking as shown below. The label can use wording such as the following:  
+Contains Transmitter Module 
+內含發射器模組:: 
+ CCAJ18LP0B50T1 
+Any similar wording that expresses the same meaning may also be used. The marking must be visible 
+for inspection. 
+6.6.4 NINA-W106 labeling requirements for end product 
+When a product integrated with a NINA-W106 module is placed on the Taiwan market, the product 
+must be affixed with a label marking as shown below. The label can use wording such as the following:  
+Contains Transmitter Module 
+內含發射器模組:: 
+ CCAI21Y10090T1   
+Any similar wording that expresses the same meaning may also be used. The marking must be visible 
+for inspection. 
+
+--- PAGE 36 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 36 of 52 
+C1 – Public 
+ 
+ 
+6.7 KCC South Korea compliance 
+The NINA-W10 series modules are certified by the Korea Communications Commission (KCC).  
+When a product containing a NINA-10 module is placed on the South Korean market, the product 
+must be affixed with a label or marking containing the KCC logo and certification number shown in 
+the figures below. This information must also be included in the products user manuals. NINA-W106 
+has a different certification number than NINA-W101 and NINA-W102. 
+ 
+R-C-ULX-NINA-W106 
+NINA-W106 certification number. 
+ 
+ 
+R-C-ULX-NINA-W151 
+NINA-W151 and NINA-W152 certification number. 
+The height of the KCC logo must be at least 5 mm. 
+6.8 Brazil compliance 
+When a product containing the NINA-W10 modules is placed on the Brazilian market, the product 
+must 
+be 
+affixed 
+with 
+a 
+label 
+or 
+marking 
+containing 
+the 
+Anatel 
+logo, 
+NINA-W101/ 
+NINA-W102 Homologation number: 06870-18-05903 or NINA-W106 Homologation number: 05099-
+21-01056 and a statement claiming that the device may not cause harmful interference but must 
+accept it (Resolution No 506). 
+ 
+Figure 12: Anatel logo and Homologation number for NINA-W101 and NINA-W102. 
+ 
+ 
+Figure 13: Anatel logo and Homologation number for NINA-W106. 
+ 
+ 
+ 
+ 
+06870-18-05903 
+05099-21-01056  
+“Este equipamento opera em caráter secundário, isto é, 
+não tem direito a proteção contra interferência prejudicial, 
+mesmo de estações do mesmo tipo, e não pode causar 
+interferência a sistemas operando em caráter primário.” 
+
+--- PAGE 37 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 37 of 52 
+C1 – Public 
+ 
+ 
+Statement translation: 
+“This equipment operates on a secondary basis and, consequently, must accept harmful interference, 
+including from stations of the same kind, and may not cause harmful interference to systems 
+operating on a primary basis.” 
+When the device is so small or for such use that it is not practicable to place the statement above on 
+it, the information shall be placed in a prominent location in the instruction manual or pamphlet 
+supplied to the user or, alternatively, shall be placed on the container in which the device is marketed.  
+In case, where the final product will be installed in locations where the end user is unable to see the 
+Anatel logo, NINA-W10 Homologation number and/or this statement, the Anatel logo, NINA-W10 
+Homologation number, and the statement shall also be included in the end product manual. 
+6.9 Australia and New Zealand regulatory compliance 
+The NINA-W101, NINA-W102 and NINA-W106 modules are compliant with the 
+standards made by the Australian Communications and Media Authority (ACMA). 
+ 
+The modules are compliant with AS/NZS 4268:2012 standard – Radio equipment and systems – Short 
+range devices – Limits and methods of standard measurement. The NINA-W101, NINA-W102 and 
+NINA-W106 modules test reports can be used as part of the product certification and compliance 
+folder. For more information on the test reports, contact your local support team. 
+To meet overall Australian and/or New Zealand end product compliance, the integrator must create a 
+compliance folder containing all the relevant compliance test reports such as RF, EMC, electrical 
+safety and DoC (Declaration of Conformity) and so on. It is the responsibility of the integrator to know 
+what is required in the compliance folder for ACMA compliance. 
+For more information on Australia compliance, refer to the Australian Communications and Media 
+Authority web site http://www.acma.gov.au/.  
+For more information on New Zealand compliance, refer to the New Zealand Radio Spectrum 
+Management Group web site www.rsm.govt.nz. 
+6.10 South Africa regulatory compliance 
+NINA-W101, NINA-W102 and NINA-B106 modules are compliant and certified by the Independent 
+Communications Authority of South Africa (ICASA).  End products that are made available for sale or 
+lease or is supplied in any other manner in South Africa shall have a legible label permanently affixed 
+to its exterior surface. The label shall have the ICASA logo and the ICASA issued license number as 
+shown in Figure 14 and Figure 15. The minimum width and height of the ICASA logo shall be  
+3 mm. The approval labels must be purchased by the customer’s local representative directly from 
+the approval authority ICASA. A sample of a NINA-W101/NINA-W102/NINA-W106 ICASA label is 
+included below: 
+ 
+Figure 14: NINA-W101 and NINA-W102 ICASA label example 
+ 
+Figure 15 : NINA-W106 ICASA label example 
+APPROVED 
+TA-2018/2695 
+APPROVED 
+TA-2021/1342 
+
+--- PAGE 38 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Qualification and approvals  
+Page 38 of 52 
+C1 – Public 
+ 
+ 
+More information on registration as a Responsible Integrator and labeling requirements can be found 
+on the ICASA website: https://www.icasa.org.za 
+6.11 Safety Compliance 
+In order to fulfill the safety standard EN 62368-1, the NINA-W10 series modules must be supplied 
+with a Class-2 Limited Power Source. 
+6.12 Bluetooth qualification information 
+End products are required to be qualified and listed for the Bluetooth Special Interest Group 
+(SIG). 
+ 
+Product declarations are submitted through the SIG Bluetooth Launch Studio website. 
+NINA-W101, NINA-W102 and NINA-W106 modules are qualified as a Controller Subsystem in 
+accordance with the Bluetooth 4.2 specification and are registered with the SIG Qualified Design IDs 
+(QDID) shown in Table 22. 
+To list your product that integrates NINA-W101, NINA-W102 or NINA-W106 as an End product (with 
+no additional testing required), combine the QDID for the  Bluetooth stack implemented in the Host 
+Subsystem with the QDID of the  pre-qualified Controller Subsystem shown in Table 22.   
+Model 
+Product type 
+QDID 
+Listing date 
+NINA-W101, NINA-W102 
+Controller Subsystem  
+QDID 107058 
+14-Mar-2018 
+NINA-W106 
+Controller Subsystem 
+QDID 152314 
+17-Dec-2020 
+Table 22: NINA-W101/NINA-W102/NINA-W106 Bluetooth QDID 
+☞ 
+The Espressif IoT development framework for ESP32 (ESP-IDF) currently supports two host 
+Bluetooth stacks: Bluedroid (QDID 115966) for classic Bluetooth as well as Bluetooth LE, and 
+Apache NimBLE (QDID 1311934) for Bluetooth LE only. For further listing information, search the 
+Bluetooth Launch Studio website. 
+
+--- PAGE 39 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Antennas  
+Page 39 of 52 
+C1 – Public 
+ 
+ 
+7 
+Antennas 
+This chapter provides an overview of the different external antennas that can be used together with 
+the module. 
+⚠ 
+This radio transmitter IC: 8595A-NINAW10 has been approved by Industry Canada to operate with 
+the antenna types listed below with the maximum permissible gain and required antenna 
+impedance for each antenna type indicated. Antenna types not included in this list, having a gain 
+greater than the maximum gain indicated for that type, are strictly prohibited for use with this 
+device. 
+⚠ 
+Cet émetteur radio IC: 8595A-NINAW10 été approuvé par Industry Canada pour fonctionner avec 
+les types d’antenne énumérés ci-dessous avec le gain maximum autorisé et l’impédance 
+39ecessaire pour chaque type d’antenne indiqué. Les types d’antenne ne figurant pas dans cette 
+liste et ayant un gain supérieur au gain maximum indiqué pour ce type-là sont strictement 
+interdits d’utilisation avec cet appareil. 
+ 
+For each antenna, the “Approvals” field defines in which test reports the antenna is included. 
+Definitions of the «Approvals» field are: 
+• 
+FCC – The antenna is included in the FCC test reports and thus approved for use in countries that 
+accept the FCC radio approvals, primarily in the US. 
+• 
+IC – The antenna is included in the IC (Industrie Canada) test reports and thus approved for use in 
+countries that accept the IC radio approvals, primarily Canada. 
+• 
+RED - The antenna is included in the ETSI test reports and thus approved for use in countries that 
+accept the Radio Equipment Directive, primarily the European countries. 
+• 
+UKCA – The antenna is included in the UKCA test reports and thus approved for use in Great 
+Britain. 
+• 
+MIC – The antenna is included in the Japanese government affiliated MIC test reports and thus 
+approved for use in the Japanese market. 
+• 
+NCC – The antenna is included in the Taiwan NCC test reports and thus approved for use in Taiwan. 
+• 
+KCC - The antenna is included in the Korea KCC test reports and thus approved for use in Korea. 
+• 
+ANATEL – The antenna is included in the Brazil Anatel test reports and thus approved for use in 
+Brazil. 
+• 
+ACMA – The antenna is included in the Australia and New Zealand test reports and thus approved 
+for use in Australia and New Zealand. 
+• 
+ICASA – The antenna is included in the South Africa ICASA test reports and thus approved for use 
+in South Africa. 
+In general, antennas with SMD connection, Reverse Polarity SMA connector or U.FL connector are 
+included in FCC, IC, RED, MIC, NCC, KCC, ANATEL, ACMA and ICASA radio tests. The antennas with 
+SMA connector are included in RED, MIC, NCC, KCC, ANATEL, ACMA and ICASA radio tests but not in 
+the FCC or IC due to FCC/IC regulations.  
+The external antennas are connected to the board through U.FL connectors. Some antennas are 
+connected directly to the U.FL connector of the board while some are connected using an SMA or 
+reversed polarity SMA connector through a short U.FL to SMA or reversed polarity SMA adapter cable. 
+ 
+ 
+
+--- PAGE 40 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Antennas  
+Page 40 of 52 
+C1 – Public 
+ 
+ 
+7.1 Antenna accessories 
+Name 
+U.FL to SMA adapter cable 
+ 
+Connector 
+U.FL and SMA jack (outer thread and pin receptacle) 
+ 
+Impedance 
+50 Ω 
+Minimum cable loss 
+0.5 dB, The cable loss must be above the minimum 
+cable loss to meet the regulatory requirements. 
+Minimum cable length 100 mm. 
+Comment 
+The SMA connector can be mounted in a panel. 
+See NINA-W1 series system integration manual [1] 
+for  information how to integrate the U.FL connector. 
+Approval 
+RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and 
+ICASA 
+ 
+Name 
+U.FL to Reverse Polarity SMA adapter cable 
+ 
+Connector 
+U.FL and Reverse Polarity SMA jack (outer thread and 
+pin) 
+ 
+Impedance 
+50 Ω 
+Minimum cable loss 
+0.5 dB, The cable loss must be above the minimum 
+cable loss to meet the regulatory requirements. 
+Minimum cable length 100 mm. 
+Comment 
+The Reverse Polarity SMA connector can be mounted 
+in a panel.  
+See NINA-W1 series system integration manual [1] 
+for  information how to integrate the U.FL connector. 
+This reference design must be followed to comply 
+with the NINA–W1 FCC/IC modular approvals. 
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA 
+and ICASA 
+7.2 Approved antennas 
+7.2.1 Single band antennas 
+NINA-W102 
+ 
+Manufacturer Abracon 
+ 
+ 
+Gain 
++3 dBi 
+Impedance 
+50 Ω 
+Size (HxWxL) 
+3.0 x 3.8 x 9.9 mm 
+Type 
+PIFA 
+Comment 
+SMD PIFA antenna on NINA-W102. Should not be mounted inside a metal 
+enclosure. See also Internal antenna. 
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+ 
+NINA-W106 
+ 
+Manufacturer Abracon 
+ 
+ 
+Gain 
++3 dBi 
+Impedance 
+N/A 
+Size (HxWxL) 
+1.1 x 3.4 x 10 mm 
+Type 
+PCB trace 
+Comment 
+PCB antenna on NINA-W106. Should not be mounted inside a metal enclosure. 
+See also Internal antenna. 
+Approval 
+FCC, IC, RED, UKCA, MIC and ACMA 
+
+--- PAGE 41 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Antennas  
+Page 41 of 52 
+C1 – Public 
+ 
+ 
+ 
+GW.26.0111 
+ 
+Manufacturer Taoglas 
+ 
+Polarization 
+Vertical 
+Gain 
++2.0 dBi 
+Impedance 
+50 Ω 
+Size 
+Ø 7.9 x 30.0 mm 
+Type 
+Monopole 
+Connector 
+SMA (M) .  
+Comment 
+To be mounted with a U.FL to SMA adapter cable. 
+Approval 
+RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+ 
+ANT-2.4-CW-RH-RPS 
+ 
+Manufacturer Linx 
+Polarization 
+Vertical 
+Gain 
+-1.0 dBi 
+Impedance 
+50 Ω 
+Size 
+Ø 7.4 x 27.0 mm 
+Type 
+Monopole 
+Connector 
+Reverse Polarity SMA plug (inner thread and pin receptacle).  
+Comment 
+To be mounted with a U.FL to SMA adapter cable. 
+An SMA version antenna is also available but not recommended for use 
+(ANT-2.4-CW-RH-SMA). 
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+ 
+Wi-Fi external antenna, PN PRO-EX-348 
+ 
+Manufacturer Abracon 
+ 
+Polarization 
+Vertical 
+Gain 
++3.0 dBi 
+Impedance 
+50 Ω 
+Size 
+Ø 12.0 x 28.0 mm 
+Type 
+Monopole 
+Connector 
+Reverse Polarity SMA plug (inner thread and pin receptacle).  
+Comment 
+The antenna adapter cable UF.L part must be mounted on a metal ground plane for 
+best performance. 
+To be mounted with a U.FL to SMA adapter cable. 
+An SMA version antenna is also available but not recommended for use 
+(Ex-It 2400 28 SMA). 
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA, and ICASA 
+Original part number at certification: Ex-IT 2400 RP-SMA 28-001) 
+ 
+ 
+ 
+
+--- PAGE 42 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Antennas  
+Page 42 of 52 
+C1 – Public 
+ 
+ 
+Wi-Fi / Bluetooth external antenna, PN PRO-EX-296 
+ 
+Manufacturer Abracon 
+Polarization 
+Vertical 
+Gain 
++2.0 dBi 
+Impedance 
+50 Ω 
+Size 
+Ø 12.0 x 28.0 mm 
+Type 
+Monopole 
+Cable length 
+100 mm 
+Connector 
+U.FL. connector  
+Comment 
+This antenna requires to be mounted on a metal ground plane for 
+best performance. To be mounted with a U.FL connector.  
+See NINA-W10 series system integration manual [1] for 
+information how to integrate the U.FL connector. This reference 
+design must be followed to comply with the NINA–W1 FCC/IC 
+modular approvals.  
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+Original part number at certification: Ex-IT 2400 MHF 28) 
+ 
+Wi-Fi / Bluetooth / Bluetooth LE external whip antenna, PN PRO-EX-333 
+ 
+Manufacturer Abracon 
+Polarization 
+Vertical 
+Gain 
++3.0 dBi 
+Impedance 
+50 Ω 
+Size 
+Ø 10 x 83 mm 
+Type 
+Monopole 
+Connector 
+Reverse Polarity SMA plug (inner thread and pin receptacle) 
+Comment 
+To be mounted with a U.FL to Reverse Polarity SMA adapter cable. An 
+SMA version antenna is also available but not recommended for use 
+(PN PRO-EX-332).  
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+Original part number at certification: Ex-IT 2400 RP-SMA 70-002) 
+ 
+Wi-Fi / Bluetooth external whip antenna, PN PRO-EX-327 
+ 
+Manufacturer Abracon 
+ 
+Polarization 
+Vertical 
+Gain 
++3.0 dBi 
+Impedance 
+50 Ω 
+Size 
+Ø 9.4 x 70.5 mm 
+Type 
+Monopole 
+Cable length 
+100 mm 
+Connector 
+U.FL. connector  
+Comment 
+To be mounted with a U.FL connector.  
+See NINA-W1 series system integration manual [1] for information 
+how to integrate the U.FL connector. Ths reference design must be 
+followed this reference design to comply with the NINA-W10 
+FCC/IC modular approvals.  
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+Original part number at certification: Ex-IT 2400 MHF 70-001) 
+ 
+ 
+ 
+
+--- PAGE 43 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Antennas  
+Page 43 of 52 
+C1 – Public 
+ 
+ 
+Wi-Fi / Bluetooth / Bluetooth LE board antenna, PN PRO-IS-237 
+ 
+Manufacturer Abracon 
+ 
+Gain 
++3.0 dBi 
+Impedance 
+50 Ω 
+Size 
+27 x 12 mm (triangular) 
+Type 
+Patch 
+Cable length 
+100 mm 
+Connector 
+U.FL. connector  
+Comment 
+Should be attached to a plastic enclosure or part for best 
+performance. 
+To be mounted with a U.FL connector.  
+See NINA-W1 series system integration manual [1] for information 
+how to integrate the U.FL connector. This reference design must be 
+followed to comply with the NINA–W1 FCC/IC modular approvals.  
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+7.2.2 Dual-band antennas 
+Wi-Fi / Bluetooth / Bluetooth LE board antenna, PN PRO-IS-299 
+ 
+Manufacturer Abracon 
+ 
+Gain 
++3.0 dBi 
+Impedance 
+50 Ω 
+Size 
+27 x 12 mm (triangular) 
+Type 
+Patch 
+Cable length 
+100 mm 
+Connector 
+U.FL. connector  
+Comment 
+Should be attached to a plastic enclosure or part for best 
+performance. Dual-band (2.4 GHz / 5 GHz) antenna to be mounted 
+with a U.FL connector. See NINA-W1 series system integration 
+manual [1] for information how to integrate the U.FL connector. This 
+reference design must be followed to comply with the NINA–W1 
+FCC/IC modular approvals.  
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+ 
+Wi-Fi / Bluetooth / Bluetooth LE board antenna, PN PRO-IS-432 
+ 
+Manufacturer Abracon 
+ 
+Gain 
++3.0 dBi 
+Impedance 
+50 Ω 
+Size 
+24x22x1 mm with mounting hole 
+Type 
+Patch 
+Cable length 
+100 mm 
+Connector 
+U.FL. connector  
+Comment 
+Should be attached to a plastic enclosure or part for best 
+performance. Dual-band (2.4 GHz / 5 GHz) antenna to be mounted 
+with a U.FL connector. See NINA-W1 series system integration 
+manual [1] for information on how to integrate the U.FL connector. 
+This reference design must be followed to comply with the NINA-
+W10 FCC/IC modular approvals.  
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+ 
+ 
+ 
+
+--- PAGE 44 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Antennas  
+Page 44 of 52 
+C1 – Public 
+ 
+ 
+Wi-Fi / Bluetooth exernal whip antenna, PN PRO-EX-286 
+ 
+Manufacturer Abracon 
+ 
+Polarization 
+Vertical 
+Gain 
++3 dBi 
+Impedance 
+50 Ω 
+Size 
+107 mm (Straight) 
+Type 
+Monopole 
+Connector 
+Reverse Polarity SMA plug (inner thread and pin receptacle) 
+Comment 
+To be mounted with a U.FL to Reverse Polarity SMA adapter cable. 
+Approval 
+FCC, IC, RED, UKCA, MIC, NCC, KCC, ANATEL, ACMA and ICASA 
+Original part number at certification: Ex-IT WLAN RPSMA) 
+ 
+ 
+
+--- PAGE 45 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Product handling  
+Page 45 of 52 
+C1 – Public 
+ 
+ 
+8 
+Product handling  
+8.1 Packaging 
+To enable efficient production, lot set-up, and tear-down, NINA-W10 series modules are delivered as 
+hermetically sealed, reeled tapes. For more information about packaging, see also the Packaging 
+information reference [2]. 
+8.1.1 Reels 
+NINA-W1 modules are delivered in quantities of 500 pieces on a reel. Table 23 shows the reel types 
+for NINA-W10 modules as they are delivered on tape. See also the Packaging information guide [2]. 
+Model 
+Reel type 
+NINA-W101 
+B  
+NINA-W102 
+A  
+NINA-W106 
+A 
+Table 23: Reel types for different NINA-W10 series modules 
+8.1.2 Tapes 
+Figure 16 and Figure 17 show the position and orientation of the NINA-W10 module variants as they 
+are delivered on tape.  
+ 
+ 
+Figure 16: NINA-W101 module on tape orientation 
+ 
+ 
+ 
+Figure 17: NINA-W102/NINA-W106 module on tape orientation 
+Feed 
+Feed 
+
+--- PAGE 46 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Product handling  
+Page 46 of 52 
+C1 – Public 
+ 
+ 
+The dimensions of the tapes are specified in Figure 18. 
+ 
+Figure 18: NINA-W101 tape dimensions 
+ 
+The dimensions of the tapes are specified in Figure 19. 
+ 
+Figure 19: NINA-W102/NINA-W106 tape dimensions 
+
+--- PAGE 47 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Product handling  
+Page 47 of 52 
+C1 – Public 
+ 
+ 
+8.2 Moisture sensitivity levels 
+⚠ 
+NINA-W10 series modules are rated as MSL Level 4 devices in accordance with the IPC/JEDEC 
+J-STD-020 standard. For detailed information, see the moisture sensitive warning label on the 
+MBB (Moisture Barrier Bag). 
+After opening the dry pack, the modules must be mounted within 72 hours in factory conditions of 
+maximum 30 °C/60%RH or must be stored at less than 10%RH. The modules require baking if the 
+humidity indicator card shows more than 10% when read at 23±5 °C or if the conditions mentioned 
+above are not met. For information about the bake procedure, see also the J-STD-033B standard. 
+For more information regarding MSL (Moisture Sensitivity Level), labeling, and storage, see also the 
+Packaging information guide [2]. 
+☞ 
+For MSL standards, see IPC/JEDEC J-STD-020, which can be downloaded from www.jedec.org. 
+8.3 Reflow soldering 
+ NINA-W1 series modules are approved for two reflow cycles. 
+⚠ 
+Reflow soldering profiles must be selected in accordance with u-blox soldering recommendations 
+described in the system integration manual [1]. Failure to observe these recommendations can 
+result in severe damage to the product.  
+8.4 ESD precautions 
+⚠ 
+NINA-W10 series modules are Electrostatic Sensitive Devices that demand the observance of 
+special handling precautions against static damage. Failure to observe these precautions can 
+result in severe damage to the product.  
+Proper ESD handling and packaging procedures must be applied throughout the processing, handling, 
+and operation of any application that incorporates NINA-W10 series modules. ESD precautions 
+should be implemented on the application board where the module is mounted.  
+For further information about the handling of NINA-W10 series modules, see also the NINA-W10 
+system integration manual [1]. 
+ 
+ 
+ 
+
+--- PAGE 48 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Labeling and ordering information  
+Page 48 of 52 
+C1 – Public 
+ 
+ 
+9 
+Labeling and ordering information 
+9.1 Product labeling 
+The labels (7.5 x 7.5 mm) of the NINA-W10 series modules include important product information. 
+Figure 20 shows the label applied to NINA-W10 series modules. Each of the given label references are 
+described in Table 24. 
+ 
+ 
+ 
+Figure 20: Location of product type number on the NINA-W10 series module label 
+Reference 
+Description 
+1 
+Date of unit production encoded YY/WW (year, week) 
+2 
+Major and minor product version info 
+3 
+Model name (NINA-W101, NINA-W102 or NINA-W106). This is the same as the product name. 
+4 
+Data Matrix with unique serial number comprising 19 alphanumeric symbols: 
+- 
+The first 3 symbols are used for production tracking and are an abbreviated representation of 
+the Type number that is unique to each module variant.  
+- 
+The following 12 symbols represent the unique hexadecimal Bluetooth address of the module 
+AABBCCDDEEFF, and  
+The last 4 symbols represent the hardware and firmware version encoded HHFF.  
+5 
+u-blox logo. The red dot also indicates pin 1. 
+Table 24: NINA-W10 series label description 
+3 
+1 
+2 
+4 
+5 
+
+--- PAGE 49 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Labeling and ordering information  
+Page 49 of 52 
+C1 – Public 
+ 
+ 
+9.2 Product identifiers 
+Table 25 describes the three product identifiers, namely the Type number, Model name and Ordering 
+code. 
+Format 
+Description 
+Nomenclature 
+Model 
+name 
+Describes the form factor, platform technology and 
+platform variant. Used mostly in product documentation 
+like this data sheet, the model name represents the 
+most common identity for all u-blox products 
+PPPP-TGVV 
+Ordering 
+code 
+Comprises the model name – with additional identifiers 
+to describe the major product version and quality grade 
+PPPP-TGVV-TTQ 
+Type 
+number 
+Comprises the model name and ordering code – with 
+additional identifiers to describe minor product versions.  
+PPPP -TGVV-TTQ-XX 
+Table 25: Product code formats 
+9.3 Identification codes 
+Table 26 describes the individual identification codes represented in each product identifier. 
+Code 
+Meaning 
+Example 
+PPPP 
+Form factor 
+NINA 
+TG 
+Platform (Technology and Generation) 
+T – Dominant technology, For example, W: Wi-Fi, B: 
+Bluetooth 
+G – Generation 
+W1: Wi-Fi Generation 1 
+VV 
+Variant based on the same platform; range [00…99] 
+01: product with antenna pin 
+TT 
+Major Product Version 
+00: first revision 
+Q 
+Quality grade 
+A: Automotive 
+B: Professional 
+C: Standard 
+B: professional grade 
+ 
+XX 
+Minor product version (not relevant for certification) 
+Default value is 00 
+Table 26: Part identification code 
+9.4 Ordering information 
+Ordering code 
+Product 
+NINA-W101-01B 
+Module with antenna pin. Open CPU version. Using ESP32-D0WDQ6-V3. Flash 16Mbit. 
+NINA-W102-01B 
+Module with internal PIFA antenna. Open CPU version. Using ESP32-D0WDQ6-V3. Flash 16Mbit. 
+NINA-W106-00B 
+Module with internal PCB trace antenna. Open CPU version. Using ESP32-D0WD-V3. Flash 32Mbit. 
+NINA-W106-10B 
+Module with internal PCB trace antenna. Open CPU version. Using ESP32-D0WD-V3. Flash 64Mbit. 
+Table 27: Product ordering codes 
+ 
+
+--- PAGE 50 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Appendix  
+Page 50 of 52 
+C1 – Public 
+ 
+ 
+Appendix  
+A Glossary 
+Abbreviation 
+Definition 
+ADC 
+Analog to Digital Converter 
+BLE 
+Bluetooth low energy 
+BPF 
+Band Pass Filter 
+BR/EDR 
+Basic rate/Enhanced data rate 
+BT 
+Bluetooth 
+CAN 
+Controller Area Network 
+CTS 
+Clear To Send 
+DAC 
+Digital to Analog Converter 
+DC 
+Direct Current 
+DSR 
+Data Set Ready 
+ESD 
+Electro Static Discharge 
+FCC 
+Federal Communications Commission 
+GATT 
+Generic ATTribute profile 
+GND 
+Ground 
+GPIO 
+General Purpose Input/Output 
+I2C 
+Inter-Integrated Circuit 
+IC 
+Industry Canada 
+IEEE 
+Institute of Electrical and Electronics Engineers 
+IoT 
+Internet of Things 
+LPO 
+Low Power Oscillator 
+MCU 
+Micro Controller Unit 
+MDIO 
+Management Data Input / Output 
+MII 
+Media-Independent Interface 
+MIMO 
+Multi-Input Multi-Output 
+MRD 
+Market Requirement Document 
+MSD 
+Moisture Sensitive Device 
+N/A 
+Not Applicable 
+PCN 
+Product Change Notification 
+PIFA 
+Planar Inverted IF Antenna 
+QSPI 
+Quad Serial Peripheral Interface 
+RMII 
+Reduced Media Independent Interface 
+RTS 
+Request To Send 
+RXD 
+Receive Data 
+SDIO 
+Secure Digital Input Output 
+SDK 
+Software Development Kit 
+SPI 
+Serial Peripheral Interface 
+TBD 
+To Be Defined 
+TXD 
+Transmit Data 
+UART 
+Universal Asynchronous Receiver/Transmitter 
+Table 28: Explanation of the abbreviations and terms used 
+ 
+
+--- PAGE 51 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Related documents  
+Page 51 of 52 
+C1 – Public 
+ 
+ 
+Related documents 
+[1] NINA-W1 series system integration manual, UBX-17005730 
+[2] Packaging information reference, UBX-14001652 
+[3] Espressif System ESP32 Datasheet, version 3.6 
+[4] NINA-W10 EU Declaration of Conformity, UBX-18007184 
+[5] NINA-W10 series product summary, UBX-17051775 
+[6] NINA-W10 UKCA Declaration of Conformity, UBX-22035018 
+☞ 
+For product change notifications and regular updates of u-blox documentation, register on our 
+website, www.u-blox.com. 
+Revision history 
+Revision 
+Date 
+Name 
+Comments 
+R01 
+5-Mar-2018 
+mwej, kgom 
+Initial release of the Data Sheet for NINA-W10 series with open CPU 
+architecture. Refer to UBX-17006694 for information about NINA-W13 series.  
+R02 
+19-Apr-2018 
+mlju, kgom 
+Updated the ordering codes (Table 27). 
+R03 
+5-Jun-2018 
+mwej, ovik, 
+mlju, kgom  
+Added Bluetooth Qualification information (section 6.12). Updated Mac 
+addresses (section 1.7). Updated Table 4 and section 6. 
+R04 
+4-Jan-2019 
+mwej, kgom 
+Removed "pending" status for Japan and Korea (section 6.1). Updated label 
+description (Table 24). Updated Bluetooth qualification information (section 
+6.12). Updated SPI data signals naming to MOSI/MISO (section 3.4). Added 
+information about UART2 (section 2.7.1). Removed LPO functionality. In 
+chapter 4, updated RF characteristics. 
+R05 
+8-Aug-2019 
+mwej 
+Corrected LPO functionality information (moved LPO_IN signal from pin 5 to 
+pin 7). Added certification information for Brazil, Australia, New Zealand and 
+South Africa (sections 6.8-6.10). Updated information about approved 
+antennas (chapter 7). Updated with RoHS 3 compliance (section 6.2.2). 
+Updated voltage supply range (section 4.2.2) and Absolute maximum module 
+supply voltage and maximum RF input ratings (section 4.1). Updated 
+maximum ESD ratings (section 4.1.1). Corrected Wi-Fi typical output power in 
+section 1.5  (matching Wi-Fi radio characteristics section). Updated Bluetooth 
+output power and sensitivity (sections 4.2.8 and 4.2.9). 
+R06 
+20-Apr-2020 
+hekf 
+Added information describing the new NINA-W106 product and NINA-
+W101/W102 variants. Added antenna radiation patterns in section 4.2.10. 
+Changed bootstrap information in section 2.4. Changed ESD ratings in 
+section 4.1.1 and descriptions of GPIO drive current capabilities in section 
+4.2.5. Changed the number of GPIOs, Table 4, Figure 2, and Figure 3. 
+R07 
+8-Jul-2020 
+hekf 
+Added footnote in ESD section 4.1.1. Changed status of NINA-W101-01B-00 
+and NINA-W102-01B-00 modules to In Development. 
+R08 
+10-Jul-2020 
+mwej 
+Changed status of NINA-W106-00B-00 to Prototype. 
+R09 
+18-Dec-2020 
+hekf 
+Updated Radiation pattern in section 4.2.10. Updated the current 
+consumptions in section 4.2.6. Updated frequency range in section 4.2.7. 
+Noted ESP32 internally configured in section 2.4. Added remark concerning 
+pin 5 and 7 LPO in section 3.4. Removed max values in section 4.2.6 Current 
+consumption. Revised Wi-Fi throughput, power consumption parameters in 
+sleep mode, certifications, and approvals status. Added WPA3 security 
+support. Revised NINA-W106 product status in the Document information. 
+R10 
+8-Apr-2021 
+fkru, flun, hekf Added NINA-W106 as certified for Canada, Japan, Australia, and New Zeeland 
+in section 6 (Qualification and approvals). Removed reference to Host 
+Subsystem QD ID 110883. Clarified LPO requirements in section 4.2.4 and 
+decreased the minimum capacitor to 200 pF. Removed Product feature table. 
+
+--- PAGE 52 ---
+ 
+NINA-W10 series - Data sheet 
+UBX-17065507 - R17 
+Contact  
+Page 52 of 52 
+C1 – Public 
+ 
+ 
+Revision 
+Date 
+Name 
+Comments 
+R11 
+27-Oct-2021 
+fkru, hekf, 
+mlju, cche 
+Added NINA-W106 as certified for South Korea and Brazil. Updated names 
+for ProAnt Ex-It series antennas and FlatWhip EOL in Approved antennas. 
+Removed NINA-W106-00B-00 and added NINA-W106-00B-01 and 
+NINA-W106-10B-00 in the product table, Document information and 
+Ordering information. Removed ambiguous description of operating 
+condition ranges in Electrical specifications. Updated information describing 
+Moisture sensitivity levels, Reflow soldering, and ESD precautions. Revised 
+Labeling and ordering information. Updated all document cross references. 
+Revised Maximum ESD ratings. 
+R12 
+29-Nov-2021 
+hekf 
+Changed to Initial Production for NINA-W106-10B-00 in the product table, 
+Document information. Revised Product handling information and removed 
+obsolete notice relating to information validity for modules in Development 
+status.  
+R13 
+16-Aug-2022 
+fkru, cche, 
+ecar 
+Added ICASA certification for NINA-W106 in South Africa regulatory 
+compliance. Corrected appropriate bake mount time to 72 hours in Moisture 
+sensitivity levels. Updated contact information. Revised Bluetooth 
+qualification information. Revised former Proant antenna references with 
+updated part numbers from Abracon and removed obsolete antennas (EOL) 
+from the list of approved antennas. Removed ordering codes for now 
+obsolete/EOL products (NINA-W101-00B and NINA-W102-00B).  
+R14 
+19-Dec-2022 
+ecar, hekf 
+Updated product status in Document information. Added data for the 
+RESET_N pin characteristics in Table 9. Revised Figure 5 describing the 
+measurement procedure for radiation patterns. Added Great Britain 
+regulatory compliance statement. 
+R15 
+16-Jun-2023 
+Mwej, hekf 
+Clarified usage of ANT pin 13 for NINA-W102 and NINA-W106 in Table 4. 
+Added note in RESET_N pin. 
+R16 
+26-Jan-2024 
+lkis 
+Fixed typo error in Table 4. 
+R17 
+05-May-2025 
+hvig 
+Set NINA-W101, NINA-W102, and NINA-W106-10B to NRND status. 
+ 
+Contact 
+For further support and contact information, visit us at www.u-blox.com/support. 
+ 

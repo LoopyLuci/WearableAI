@@ -1,0 +1,20 @@
+# ARP-2040 Agentic Arduino MCP Toolkit Configuration
+# Copy this file to configure your toolkit
+
+workspace: /path/to/your/arduino/projects
+dry_run: false
+
+# Serial defaults
+default_baud: 115200
+default_fqbn: rp2040:rp2040:nano_rp2040_connect
+
+# Tool paths
+platformio_path: pio
+arduino_cli_path: arduino-cli
+
+# Safety
+watchdog_timeout_s: 30
+max_serial_ports: 10
+
+# Logging
+log_level: INFO

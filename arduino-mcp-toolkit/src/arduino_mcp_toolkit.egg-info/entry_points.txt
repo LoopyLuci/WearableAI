@@ -1,0 +1,2 @@
+[console_scripts]
+arduino-mcp = arduino_mcp_toolkit.main:cli_main

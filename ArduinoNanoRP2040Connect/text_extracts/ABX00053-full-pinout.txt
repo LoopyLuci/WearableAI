@@ -1,0 +1,878 @@
+
+--- PAGE 1 ---
+This work is licensed under the Creative Commons 
+Attribution-ShareAlike 4.0 International License. To view 
+a copy of this license, visit http://creativecommons.
+org/licenses/by-sa/4.0/ or send a letter to Creative 
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Ground
+Power
+LED
+Internal Pin
+SWD Pin
+Digital Pin
+Analog Pin
+Other Pin
+Microcontroller’s Port
+Default
+Last update: 17 Jun, 2024
+MAXIMUM GPIO input 
+voltage is 3.3V
+MAXIMUM sum of all 
+current being sunk into 
+GPIO and QSPI pins is 50mA
+MAXIMUM I/O supply 
+voltage is 3.63V
+VIN Input voltage to the board.
+STORE.ARDUINO.CC/NANO-RP2040-CONNECT
+GND
+RX
+TX
++5V
+GND
+VIN
+REC
+RESET
+D12
+D11
+D10
+D9 
+D8 
+D7 
+D6 
+D5 
+D4 
+D3 
+D2 
+D13
++3V3
+AREF
+D14
+D15
+D16
+A2
+D17
+D18
+D19
+D20
+D21
+A0
+A1
+A3
+A4
+A5
+A6
+A7
+GPIO6
+PA03
+GPIO26
+GPIO27
+GPIO28
+GPIO29
+GPIO12
+GPIO13
+QSPI_CSn
+SCK
+A0
+A1
+A2
+A3
+A4/SDA
+A5/SCL
+A6
+A7
+GPIO4 
+GPIO7 
+GPIO5 
+GPIO21
+GPIO20
+GPIO19
+GPIO18
+GPIO17
+GPIO16
+GPIO15
+GPIO25
+RESET
+GPIO1
+GPIO0
+CIPO
+COPI
+LED_BUILTIN
+Power
+
+--- PAGE 2 ---
+This work is licensed under the Creative Commons 
+Attribution-ShareAlike 4.0 International License. To view 
+a copy of this license, visit http://creativecommons.
+org/licenses/by-sa/4.0/ or send a letter to Creative 
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Ground
+Power
+LED
+Internal Pin
+SWD Pin
+Digital Pin
+Analog Pin
+Other Pin
+Microcontroller’s Port
+Default
+Last update: 17 Jun, 2024
+MAXIMUM GPIO input 
+voltage is 3.3V
+MAXIMUM sum of all 
+current being sunk into 
+GPIO and QSPI pins is 50mA
+MAXIMUM I/O supply 
+voltage is 3.63V
+VIN Input voltage to the board.
+STORE.ARDUINO.CC/NANO-RP2040-CONNECT
+Analog
+Communication
+Timer
+GPIO
+GND
+RX
+TX
++5V
+GND
+VIN
+RESET
+D12
+D11
+D10
+D9 
+D8 
+D7 
+D6 
+D5 
+D4 
+D3 
+D2 
+D13
++3V3
+AREF
+D14
+D15
+D16
+A2
+D17
+D18
+D19
+D20
+D21
+A0
+A1
+A3
+A4
+A5
+A6
+A7
+PWM
+DEFAULT
+DEFAULT
+UART
+SPI
+I2C
+GPIO6
+PA03
+GPIO26
+GPIO27
+GPIO28
+GPIO29
+GPIO12
+GPIO13
+QSPI_CSn
+PWM3 A
+PWM5 A
+PWM5 B
+PWM6 A
+PWM6 B
+PWM6 A
+PWM6 B
+SPI0 SCK
+SPI1 SCK
+SPI1 TX 
+SPI1 RX 
+SPI1 CSn
+SPI1 RX 
+SPI1 CSn
+UART1 CTS
+UART1 CTS
+UART1 RTS
+UART0 TX 
+UART0 RX 
+UART0 TX 
+UART0 RX 
+I2C1 SDA
+I2C1 SDA
+I2C1 SCL
+I2C0 SDA
+I2C0 SCL
+I2C0 SDA
+I2C0 SCL
+SCK
+A0
+A1
+A2
+A3
+A6
+A7
+PWM2 A
+PWM3 B
+PWM2 B
+PWM2 B
+PWM2 A
+PWM1 B
+PWM1 A
+PWM0 B
+PWM0 A
+PWM7 B
+PWM4 B
+PWM0 B
+PWM0 A
+UART1 TX 
+UART1 RTS
+UART1 RX 
+UART1 RX 
+UART1 TX 
+UART0 RTS
+UART0 CTS
+UART0 RX 
+UART0 TX 
+UART0 RTS
+UART1 RX 
+UART0 RX 
+UART0 TX 
+SPI0 TX 
+SPI0 CSn
+SPI0 CSn
+SPI0 RX 
+SPI0 TX 
+SPI0 SCK
+SPI0 CSn
+SPI0 RX 
+SPI1 TX 
+SPI1 CSn
+SPI0 CSn
+SPI0 RX 
+GPIO4 
+GPIO7 
+GPIO5 
+GPIO21
+GPIO20
+GPIO19
+GPIO18
+GPIO17
+GPIO16
+GPIO15
+GPIO25
+RESET
+GPIO1
+GPIO0
+CIPO
+COPI
+PWM
+UART
+SPI0 RX 
+SPI
+I2C0 SDA
+I2C1 SCL
+I2C0 SCL
+I2C0 SCL
+I2C0 SDA
+I2C1 SCL
+I2C1 SDA
+I2C0 SCL
+I2C0 SDA
+I2C1 SCL
+I2C0 SCL
+I2C0 SCL
+I2C0 SDA
+I2C
+LED_BUILTIN
+Power
+A4/SDA
+A5/SCL
+REC
+
+--- PAGE 3 ---
+This work is licensed under the Creative Commons 
+Attribution-ShareAlike 4.0 International License. To view 
+a copy of this license, visit http://creativecommons.
+org/licenses/by-sa/4.0/ or send a letter to Creative 
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Ground
+Power
+LED
+Internal Pin
+SWD Pin
+Digital Pin
+Analog Pin
+Other Pin
+Microcontroller’s Port
+Default
+Last update: 17 Jun, 2024
+MAXIMUM GPIO input 
+voltage is 3.3V
+MAXIMUM sum of all 
+current being sunk into 
+GPIO and QSPI pins is 50mA
+MAXIMUM I/O supply 
+voltage is 3.63V
+VIN Input voltage to the board.
+STORE.ARDUINO.CC/NANO-RP2040-CONNECT
+Analog
+Communication
+Timer
+GPIO
+GND
+RX
+TX
++5V
+GND
+VIN
+RESET
+D12
+LED_BUILTIN
+Power
+D11
+D10
+D9 
+D8 
+D7 
+D6 
+D5 
+D4 
+D3 
+D2 
+D13
++3V3
+AREF
+D14
+D15
+D16
+A2
+D17
+D18
+D19
+D20
+D21
+A0
+A1
+A3
+A4
+A5
+A6
+A7
+DEFAULT
+DEFAULT
+SIO
+GPIO6
+PA03
+GPIO26
+GPIO27
+GPIO28
+GPIO29
+GPIO12
+GPIO13
+QSPI_CSn
+SCK
+A0
+A1
+A2
+A3
+A6
+A7
+SIO
+PIO0
+PIO0
+PIO1
+PIO1
+PIO1
+PIO1
+PIO1
+PIO1
+PIO1
+PIO1
+PIO0
+PIO0
+PIO0
+PIO0
+PIO0
+PIO0
+SIO
+SIO
+SIO
+SIO
+SIO
+SIO
+USB
+NINA-W102-00B
+USB OVCUR DET
+USB VBUS EN  
+USB OVCUR DET
+USB VBUS DET 
+USB VBUS EN  
+USB OVCUR DET
+ADC2 /GPIO34
+ADC3 /GPIO39
+ADC4 /GPIO36
+ADC34/GPIO35
+SPIV_HD/RMII_TXEN/GPIO21
+USB VBUS DET 
+GPIO4 
+GPIO7 
+GPIO5 
+GPIO21
+GPIO20
+GPIO19
+GPIO18
+GPIO17
+GPIO16
+GPIO15
+GPIO25
+RESET
+GPIO1
+GPIO0
+CIPO
+COPI
+SIO
+SIO
+PIO0
+PIO0
+PIO1
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+SIO
+PIO0
+PIO1
+USB
+USB VBUS DET 
+USB VBUS DET 
+USB VBUS EN  
+USB OVCUR DET
+USB VBUS EN  
+USB VBUS DET 
+USB OVCUR DET
+USB VBUS EN  
+USB VBUS DET 
+USB OVCUR DET
+USB VBUS DET 
+USB VBUS DET 
+USB OVCUR DET
+NINA-W102-00B
+GPIO19
+CLOCK GPOUT0
+CLOCK GPIN0 
+CLOCK GPOUT3
+TIMER
+A4/SDA
+A5/SCL
+REC
+
+--- PAGE 4 ---
+This work is licensed under the Creative Commons 
+Attribution-ShareAlike 4.0 International License. To view 
+a copy of this license, visit http://creativecommons.
+org/licenses/by-sa/4.0/ or send a letter to Creative 
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Ground
+Power
+LED
+Internal Pin
+SWD Pin
+Digital Pin
+Analog Pin
+Other Pin
+Microcontroller’s Port
+Default
+Last update: 17 Jun, 2024
+MAXIMUM GPIO input 
+voltage is 3.3V
+MAXIMUM sum of all 
+current being sunk into 
+GPIO and QSPI pins is 50mA
+MAXIMUM I/O supply 
+voltage is 3.63V
+VIN Input voltage to the board.
+STORE.ARDUINO.CC/NANO-RP2040-CONNECT
+Analog
+Communication
+Timer
+GPIO
+PWM
+ADC4 /GPIO36
+WiFi
+NINA-W102-00B
+UART
+SPI
+I2C
+SIO
+PIO0
+PIO1
+USB
+ADC34/GPIO35
+PWM5 A
+UART1 CTS
+GPIO10
+GPIO33
+SPI1 SCK
+I2C1 SDA
+SIO
+PIO0
+PIO1
+USB VBUS DET 
+PWM4 B
+UART1 RX 
+GPIO9 
+SPIV_CS /GPIO5 
+SPI1 CSn
+I2C0 SCL
+SIO
+PIO0
+PIO1
+USB OVCUR DET
+PWM7 A
+UART0 CTS
+GPIO14
+SPIV_CLK/GPIO18
+SPI1 SCK
+I2C1 SDA
+SIO
+PIO0
+PIO1
+USB VBUS EN  
+PWM4 A
+UART1 TX 
+GPIO8 
+SPIV_DI /GPIO23
+SPI1 RX 
+I2C0 SDA
+SIO
+PIO0
+PIO1
+USB VBUS EN  
+QSPI_CSn
+SPIV_HD/RMII_TXEN/GPIO21
+RMII_RXD0/DAC16/GPIO25
+RMII_RXD1/DAC17/GPIO26
+RMII_CRSDV/GPIO27
+PWM0 A
+UART0 TX
+GPIO0
+RMII_CLK/GPIO0
+SPI1 RX
+I2C0 SDA
+SIO
+PIO0
+PIO1
+USB OVCUR DET
+RESET
+GPIO19
+PWM4 B
+UART1 RX
+GPIO9
+UART_TXD/GPIO1
+SPI1 CSn
+I2C0 SCL
+SIO
+PIO0
+PIO1
+USB OVCUR DET
+PWM4 A
+UART1 TX
+GPIO8
+UART_RXD/GPIO3
+SPI1 RX 
+I2C0 SDA
+SIO
+PIO0
+PIO1
+USB VBUS EN  
+ANT
+ANT
+PWM5 B
+UART1 RTS
+GPIO11
+GPIO12
+SPI1 TX
+I2C1 SCL
+SIO
+PIO0
+PIO1
+USB VBUS EN  
+PWM1 B
+UART0 RTS
+GPIO3 
+RESET_N
+SPI0 TX
+I2C1 SCL
+SIO
+PIO0
+PIO1
+USB OVCUR DET
+LEDR
+LEDB
+LEDG
+SDA
+CRYPTO
+ATECC608A
+SCL
+USB
+USB OVCUR DET
+PWM6 A
+UART0 TX
+PWM
+GPIO12
+UART
+SPI1 RX 
+SPI
+I2C0 SDA
+I2C
+PWM6 B
+UART0 RX
+GPIO13
+SPI1 CSn
+I2C0 SCL
+SIO
+SIO
+PIO0
+PIO0
+PIO1
+PIO1
+SIO
+PIO0
+PIO1
+USB VBUS DET 
+NINA-W102-00B
+ADC2/GPIO34/GPIO14
+ADC3/GPIO39/GPIO13
+RGB LED
+RP2040
+i
+SJ2
+Remove the resistor to
+disconnect the Power LED
+
+--- PAGE 5 ---
+This work is licensed under the Creative Commons 
+Attribution-ShareAlike 4.0 International License. To view 
+a copy of this license, visit http://creativecommons.
+org/licenses/by-sa/4.0/ or send a letter to Creative 
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Ground
+Power
+LED
+Internal Pin
+SWD Pin
+Digital Pin
+Analog Pin
+Other Pin
+Microcontroller’s Port
+Default
+Last update: 17 Jun, 2024
+MAXIMUM GPIO input 
+voltage is 3.3V
+MAXIMUM sum of all 
+current being sunk into 
+GPIO and QSPI pins is 50mA
+MAXIMUM I/O supply 
+voltage is 3.63V
+VIN Input voltage to the board.
+STORE.ARDUINO.CC/NANO-RP2040-CONNECT
+Analog
+Communication
+Timer
+GPIO
+RP2040
+PWM
+MICROPHONE
+MP34DT06JTR
+UART
+SPI
+I2C
+SIO
+TIMER
+PIO0
+PIO1
+USB
+QSPI_CSn
+CS
+QSPI_SD3
+QSPI_SD0
+I/O0(SI)
+QSPI_SD2
+QSPI_SCK
+SCK
+QSPI_SD1
+I/O1(SO)
+FLASH
+AT25SF128A
+OSCILLATOR
+DSC6111HI2B
+PWM3 B
+UART1 RTS
+GPIO23
+CLK
+SPI0 TX 
+I2C1 SCL
+SIO
+PIO0
+PIO1
+USB VBUS EN
+CLOCK GPOUT1
+PWM3 A
+UART1 CTS
+GPIO22
+DOUT
+SPI0 SCK
+I2C1 SDA
+SIO
+PIO0
+PIO1
+USB VBUS DE
+CLOCK GPIN1 
+PWM6 A
+UART0 TX
+PWM
+GPIO12
+SDA
+IMU 6-AXIS
+LSM6DSOXTR
+UART
+SPI1 RX 
+SPI
+I2C0 SDA
+I2C
+SIO
+SIO
+PIO0
+PIO0
+PIO1
+PIO1
+USB
+USB OVCUR DET
+PWM6 B
+UART0 RX
+GPIO13
+SCL
+SPI1 CSn
+I2C0 SCL
+SIO
+PIO0
+PIO1
+USB VBUS DET 
+I/O2(WP)
+I/03(HOLD)
+XIN
+OUT
+Y
+X
+Z
+
+--- PAGE 6 ---
+This work is licensed under the Creative Commons 
+Attribution-ShareAlike 4.0 International License. To view 
+a copy of this license, visit http://creativecommons.
+org/licenses/by-sa/4.0/ or send a letter to Creative 
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Ground
+Power
+LED
+Internal Pin
+SWD Pin
+Digital Pin
+Analog Pin
+Other Pin
+Microcontroller’s Port
+Default
+Last update: 17 Jun, 2024
+MAXIMUM GPIO input 
+voltage is 3.3V
+MAXIMUM sum of all 
+current being sunk into 
+GPIO and QSPI pins is 50mA
+MAXIMUM I/O supply 
+voltage is 3.63V
+VIN Input voltage to the board.
+STORE.ARDUINO.CC/NANO-RP2040-CONNECT
+BOTTOM
+USB N 
++5V
+USB P 
+USB ID
+GND
+D-
+IN
+D+
+MP2322GQH
+Micro USB
+SJ4
+EN
+IN
+SW
+STEP DOWN CONVERTER
+MP2322GQH
+JTAG
+5
+1
+6
+2
+3
+5
+GND
+3
+SWCLK
+SWCLK
+2
+SWDIO
+SWDIO
+1
++3V3
+6
+RESETN
+RESET
+i
+SJ1
+Make a short circuit using the solder 
+jumper to output VUSB on VUSB Pin
++3V3
+i
+GND
+Cutting the solder jumper allows to power via 
+battery connecting the battery’s ground to the GND 
+pin and the battery’s positive to the +3V3 pin.
+3.3V
+SJ4
