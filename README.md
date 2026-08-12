@@ -42,4 +42,4 @@ See subproject READMEs for detailed setup:
 
 ## License
 
-GPL-3.0 with explicit patent grant. See `arp-2040/LICENSE` and `arduino-mcp-toolkit/LICENSE`.
+GPL-3.0 with explicit patent grant. See `LICENSE`.
