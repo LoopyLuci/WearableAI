@@ -170,3 +170,22 @@ SensorCapabilities RP2040Sensor::capabilities() const {
 }
 
 }  // namespace arp::hal
+
+ErrorCode RP2040Sensor::self_test() {
+  if (!_imu_present) {
+    return ErrorCode::NOT_READY;
+  }
+  uint8_t whoami = 0;
+  if (!read_regs(REG_WHO_AMI, &whoami, 1)) {
+    return ErrorCode::IO_ERROR;
+  }
+  return whoami == EXPECTED_WHO_AMI ? ErrorCode::OK : ErrorCode::SIGNATURE_INVALID;
+}
+
+uint32_t RP2040Sensor::serial_number() const noexcept {
+  return _serial;
+}
+
+bool RP2040Sensor::data_available() const {
+  return _imu_present;
+}
