@@ -23,6 +23,10 @@ Thumbs.db
 *~
 .hermes/
 
+# MkDocs build artifacts
+arp-2040/site/
+site/
+
 # Test artifacts
 .pytest_cache/
 .coverage

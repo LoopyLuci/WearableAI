@@ -1,6 +1,8 @@
 site_name: ARP-2040 Documentation
 site_url: https://arp-2040.nousresearch.com
-repo_url: https://github.com/your-org/arp-2040
+repo_url: https://github.com/LoopyLuci/WearableAI/tree/main/arp-2040
+docs_dir: docs
+site_dir: ../site
 
 theme:
   name: material
@@ -10,12 +12,8 @@ theme:
 
 nav:
   - Home: index.md
-  - Blueprint: blueprint.md
-  - Build Plan: 100Year_Build_Plan.md
-  - HAL Spec: hal-spec.md
-  - Protocol: protocol-spec.md
-  - API Reference: api-reference.md
-  - Build Guide: build-guide.md
+  - HAL Specification: hal-spec.md
+  - Wire Protocol: protocol-spec.md
 
 markdown_extensions:
   - admonition
@@ -25,8 +23,3 @@ markdown_extensions:
 
 plugins:
   - search
-  - mkdocstrings:
-      handlers:
-        python:
-          options:
-            docstring_style: google
