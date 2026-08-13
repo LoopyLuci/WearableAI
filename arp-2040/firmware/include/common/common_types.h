@@ -18,8 +18,9 @@ namespace arp {
 // ──────────────────────────────────────────────────────────────────────────────
 enum class ErrorCode : int32_t {
   OK = 0,
-  NOT_INITIALIZED = -1,
-  ALREADY_INITIALIZED = -2,
+  NOT_READY = -1,
+  NOT_INITIALIZED = -2,
+  ALREADY_INITIALIZED = -3,
   INVALID_PARAMETER = -3,
   INVALID_STATE = -4,
   TIMEOUT = -5,
@@ -55,7 +56,7 @@ enum class SensorType : uint8_t {
   CUSTOM = 0xFF
 };
 
-enum class SensorSampleRate : uint8_t {
+enum class SensorSampleRate : uint16_t {
   RATE_1_HZ = 1,
   RATE_10_HZ = 10,
   RATE_25_HZ = 25,
