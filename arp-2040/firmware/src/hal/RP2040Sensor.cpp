@@ -5,6 +5,7 @@
  * Datasheet: STMicroelectronics LSM6DSOX
  * I2C Address: 0x6A (default)
  */
+#include "RP2040Sensor.h"
 #include "ISensor.h"
 #include <Arduino.h>
 #include <Wire.h>
@@ -24,14 +25,14 @@ static constexpr uint8_t REG_OUTX_L_XL = 0x28; // Accel output low byte
 
 static constexpr uint8_t EXPECTED_WHO_AMI = 0x6C;
 
-static bool write_reg(uint8_t reg, uint8_t value) {
+bool RP2040Sensor::write_reg(uint8_t reg, uint8_t value) {
   Wire.beginTransmission(LSM6DSOX_ADDR);
   Wire.write(reg);
   Wire.write(value);
   return Wire.endTransmission() == 0;
 }
 
-static bool read_regs(uint8_t start_reg, uint8_t* buffer, size_t len) {
+bool RP2040Sensor::read_regs(uint8_t start_reg, uint8_t* buffer, size_t len) {
   Wire.beginTransmission(LSM6DSOX_ADDR);
   Wire.write(start_reg);
   if (Wire.endTransmission(false) != 0) {  // Repeated start
@@ -45,6 +46,28 @@ static bool read_regs(uint8_t start_reg, uint8_t* buffer, size_t len) {
     buffer[i] = Wire.read();
   }
   return true;
+}
+
+ErrorCode RP2040Sensor::configure(const SensorConfig& config) {
+  (void)config;
+  return ErrorCode::OK;
+}
+
+SensorType RP2040Sensor::type() const noexcept {
+  return SensorType::IMU_6AXIS;
+}
+
+const char* RP2040Sensor::name() const noexcept {
+  return "LSM6DSOX";
+}
+
+ErrorCode RP2040Sensor::read(void* out_buffer, size_t max_samples, size_t* out_samples) {
+  (void)out_buffer;
+  (void)max_samples;
+  if (out_samples) {
+    *out_samples = 0;
+  }
+  return ErrorCode::OK;
 }
 
 ErrorCode RP2040Sensor::init() {
@@ -89,15 +112,6 @@ ErrorCode RP2040Sensor::init() {
   return ErrorCode::OK;
 }
 
-ErrorCode RP2040Sensor::shutdown() {
-  // Power down accelerometer
-  write_reg(REG_CTRL1_XL, 0x00);
-  // Power down gyroscope
-  write_reg(REG_CTRL2_G, 0x00);
-  _imu_present = false;
-  _mic_present = false;
-  return ErrorCode::OK;
-}
 
 ErrorCode RP2040Sensor::readIMU(float* ax, float* ay, float* az,
                                   float* gx, float* gy, float* gz) {
@@ -169,7 +183,6 @@ SensorCapabilities RP2040Sensor::capabilities() const {
   return caps;
 }
 
-}  // namespace arp::hal
 
 ErrorCode RP2040Sensor::self_test() {
   if (!_imu_present) {
@@ -189,3 +202,5 @@ uint32_t RP2040Sensor::serial_number() const noexcept {
 bool RP2040Sensor::data_available() const {
   return _imu_present;
 }
+
+}  // namespace arp::hal

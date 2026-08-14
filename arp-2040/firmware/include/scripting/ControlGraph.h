@@ -47,7 +47,7 @@ struct ControlGraphHeader {
   // Followed by node_count ControlNode records
 };
 
-static_assert(sizeof(ControlGraphHeader) == 68, "ControlGraphHeader size mismatch");
+static_assert(sizeof(ControlGraphHeader) == 64, "ControlGraphHeader size mismatch");
 
 } // namespace arp::scripting
 

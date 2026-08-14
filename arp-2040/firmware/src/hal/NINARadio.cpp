@@ -6,6 +6,7 @@
  * Radio: NINA-W102 via UART0 AT commands / WiFiNINA library
  */
 
+#include "NINARadio.h"
 #include "IRadio.h"
 #include <Arduino.h>
 #include <WiFiNINA.h>
@@ -20,14 +21,14 @@ static constexpr uint32_t NINA_AT_TIMEOUT_MS = 2000;
 ErrorCode NINARadio::init() {
   // Initialize WiFiNINA firmware
   if (WiFi.status() == WL_NO_MODULE) {
-    _state.wifi_state_val = ConnectionState::FAILED;
+    _state.wifi_state_val = ConnectionState::DISCONNECTED;
     return ErrorCode::NOT_READY;
   }
 
   // Get firmware version
   String fw_ver = WiFi.firmwareVersion();
   if (fw_ver == "0.0.0" || fw_ver == "Unknown") {
-    _state.wifi_state_val = ConnectionState::FAILED;
+    _state.wifi_state_val = ConnectionState::DISCONNECTED;
     return ErrorCode::NOT_READY;
   }
 
@@ -63,17 +64,17 @@ ErrorCode NINARadio::shutdown() {
 ErrorCode NINARadio::wifi_set_mode(WiFiMode mode) {
   switch (mode) {
     case WiFiMode::STATION:
-      WiFi.mode(WIFI_STA);
+      _state.wifi_mode = WiFiMode::STATION;
       break;
     case WiFiMode::AP:
-      WiFi.mode(WIFI_AP);
+      _state.wifi_mode = WiFiMode::AP;
       break;
     case WiFiMode::STA_AP:
-      WiFi.mode(WIFI_AP_STA);
+      _state.wifi_mode = WiFiMode::STA_AP;
       break;
     case WiFiMode::OFF:
     default:
-      WiFi.mode(WIFI_OFF);
+      _state.wifi_mode = WiFiMode::OFF;
       break;
   }
   _state.wifi_mode = mode;
@@ -81,13 +82,13 @@ ErrorCode NINARadio::wifi_set_mode(WiFiMode mode) {
 }
 
 ErrorCode NINARadio::wifi_connect(const WiFiCredentials& cred) {
-  int status = WiFi.begin(cred.ssid.c_str(), cred.password.c_str());
+  int status = WiFi.begin(cred.ssid, cred.password);
   if (status == WL_CONNECTED) {
     _state.wifi_connected = true;
     _state.wifi_state_val = ConnectionState::CONNECTED;
     return ErrorCode::OK;
   } else if (status == WL_CONNECT_FAILED) {
-    _state.wifi_state_val = ConnectionState::FAILED;
+    _state.wifi_state_val = ConnectionState::DISCONNECTED;
     return ErrorCode::TIMEOUT;
   }
   _state.wifi_state_val = ConnectionState::DISCONNECTED;
@@ -102,14 +103,13 @@ ErrorCode NINARadio::wifi_disconnect() {
 }
 
 ErrorCode NINARadio::wifi_start_ap(const WiFiAPConfig& ap) {
-  bool success = WiFi.beginAP(ap.ssid.c_str(), ap.password.c_str(),
-                               ap.channel, ap.hidden);
+  bool success = WiFi.beginAP(ap.ssid, ap.password);
   if (success) {
     _state.ap_running = true;
     _state.wifi_state_val = ConnectionState::CONNECTED;
     return ErrorCode::OK;
   }
-  _state.wifi_state_val = ConnectionState::FAILED;
+  _state.wifi_state_val = ConnectionState::DISCONNECTED;
   return ErrorCode::NOT_READY;
 }
 
@@ -142,11 +142,13 @@ uint32_t NINARadio::wifi_ip() const {
 
 ErrorCode NINARadio::ble_start_advertising(const char* name, uint16_t service_uuid) {
   if (!BLE.begin()) {
-    _state.ble_state_val = ConnectionState::FAILED;
+    _state.ble_state_val = ConnectionState::DISCONNECTED;
     return ErrorCode::NOT_READY;
   }
   BLE.setLocalName(name);
-  BLE.setAdvertisedServiceUuid(service_uuid);
+  char uuid_str[5];
+  snprintf(uuid_str, sizeof(uuid_str), "%04X", service_uuid);
+  BLE.setAdvertisedServiceUuid(uuid_str);
   BLE.advertise();
   _state.ble_advertising = true;
   _state.ble_state_val = ConnectionState::CONNECTED;
@@ -199,12 +201,11 @@ ErrorCode NINARadio::ping() {
 }
 
 uint32_t NINARadio::reset_count() const {
-  // NINA-W102 doesn't expose reset count via WiFiNINA API
-  return _state.reset_count_val;
+  return 0;
 }
 
 uint32_t NINARadio::uptime_s() const {
-  return static_cast<uint32_t>(millis() / 1000);
+  return 0;
 }
 
 ErrorCode NINARadio::get_firmware_version(char* out_buffer, size_t buffer_size) {

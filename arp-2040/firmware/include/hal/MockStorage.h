@@ -20,6 +20,8 @@ extern "C" {
 namespace arp::hal {
 
 class MockStorage : public IStorage {
+  static constexpr FlashLength CAPACITY = 4096;
+  static constexpr FlashLength PAGE_SIZE = 256;
 public:
   explicit MockStorage(const char* flash_file = ":memory:");
 

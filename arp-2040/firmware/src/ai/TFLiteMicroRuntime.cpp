@@ -113,7 +113,7 @@ ModelInfo TFLiteMicroRuntime::info() const {
   info.output_size = _output_size;
   info.arena_size_bytes = _arena_size;
   info.weight_size_bytes = 0;
-  snprintf(info.name, sizeof(info.name), "Model-%u", _model_id);
+  snprintf(info.name, sizeof(info.name), "Model-%lu", _model_id);
   return info;
 }
 

@@ -123,7 +123,7 @@ ErrorCode BytecodeInterpreter::_execute_op(const uint8_t* op, const ScriptContex
     }
 
     case OpCode::OP_PUSH_IMM: {
-      if (_sp >= MAX_STACK_DEPTH - 1) return ErrorCode::MEMORY_INSUFFICIENT;
+      if (static_cast<size_t>(_sp) >= MAX_STACK_DEPTH - 1U) return ErrorCode::MEMORY_INSUFFICIENT;
       float val;
       memcpy(&val, &op[1], 4);
       _sp++;
@@ -133,7 +133,7 @@ ErrorCode BytecodeInterpreter::_execute_op(const uint8_t* op, const ScriptContex
     }
 
     case OpCode::OP_LOAD_VAR: {
-      if (_sp >= MAX_STACK_DEPTH - 1) return ErrorCode::MEMORY_INSUFFICIENT;
+      if (static_cast<size_t>(_sp) >= MAX_STACK_DEPTH - 1U) return ErrorCode::MEMORY_INSUFFICIENT;
       ScriptVar var = static_cast<ScriptVar>(op[1]);
       float val = 0.0f;
       switch (var) {

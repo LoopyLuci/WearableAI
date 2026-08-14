@@ -1,7 +1,3 @@
-/**
- * @file IAgentRegistry.h
- * @brief Central agent registry interface
- */
 #ifndef KERNEL_IAGENTREGISTRY_H
 #define KERNEL_IAGENTREGISTRY_H
 

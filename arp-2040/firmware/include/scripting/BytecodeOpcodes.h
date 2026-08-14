@@ -29,7 +29,8 @@ enum class OpCode : uint8_t {
   OP_SEND_BLE      = 0x0E,
   OP_LOG           = 0x0F,
   OP_SET_INTERVAL  = 0x10,
-  OP_HALT          = 0x11
+  OP_HALT          = 0x11,
+  OP_COUNT         = 0x12
 };
 
 enum class ScriptVar : uint8_t {
