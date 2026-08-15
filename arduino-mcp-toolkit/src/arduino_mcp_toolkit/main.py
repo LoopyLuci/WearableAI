@@ -145,6 +145,7 @@ def cli_main():
     parser.add_argument("--config", default=None, help="Path to config YAML")
     parser.add_argument("--verbose", "-v", action="store_true", help="Verbose logging")
     parser.add_argument("--dry-run", action="store_true", help="Dry run mode (no hardware writes)")
+    parser.add_argument("--tcp-port", type=int, default=None, help="Enable TCP transport on this port instead of stdio")
 
     args = parser.parse_args()
 
@@ -152,7 +153,11 @@ def cli_main():
         logging.getLogger().setLevel(logging.DEBUG)
 
     try:
-        asyncio.run(main_async())
+        if args.tcp_port is not None:
+            from arduino_mcp_toolkit.tcp_transport import run_tcp
+            asyncio.run(run_tcp(args.tcp_port, config_path=args.config, dry_run=args.dry_run))
+        else:
+            asyncio.run(main_async())
     except KeyboardInterrupt:
         logger.info("Shutting down...")
         sys.exit(0)
